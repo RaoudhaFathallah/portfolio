@@ -14,6 +14,12 @@ interface FormState {
 
 type Status = "idle" | "loading" | "success" | "error";
 
+const CONTACT_EMAIL = "fathallah.raoudha@gmail.com";
+// Web3Forms access key (public by design — it only allows posting to this address).
+// Without it the message is handed to the visitor's mail client instead.
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+
 const INPUT_BASE =
   "w-full bg-white/4 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-zinc-600 text-sm outline-none transition-all duration-200 focus:border-indigo-500/60 focus:bg-white/6 focus:ring-1 focus:ring-indigo-500/30";
 
@@ -21,10 +27,10 @@ export default function ContactPage() {
   const t = useTranslations("contact");
 
   const socials = [
-    { icon: Code2, label: "GitHub", handle: "@stefan-dev", href: "https://github.com", color: "hover:text-white" },
-    { icon: Briefcase, label: "LinkedIn", handle: "Stefan Developer", href: "https://linkedin.com", color: "hover:text-blue-400" },
-    { icon: Globe, label: "X / Twitter", handle: "@stefan_codes", href: "https://x.com", color: "hover:text-sky-400" },
-    { icon: Mail, label: "Email", handle: "stefan@arofex.info", href: "mailto:stefan@arofex.info", color: "hover:text-indigo-400" },
+    { icon: Code2, label: "GitHub", handle: "@raoudha-dev", href: "https://github.com", color: "hover:text-white" },
+    { icon: Briefcase, label: "LinkedIn", handle: "raoudha Developer", href: "https://linkedin.com", color: "hover:text-blue-400" },
+    { icon: Globe, label: "X / Twitter", handle: "@raoudha_codes", href: "https://x.com", color: "hover:text-sky-400" },
+    { icon: Mail, label: "Email", handle: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}`, color: "hover:text-indigo-400" },
   ];
 
   const [form, setForm] = useState<FormState>({ name: "", email: "", subject: "", message: "" });
@@ -51,8 +57,23 @@ export default function ContactPage() {
     e.preventDefault();
     if (!validate()) return;
     setStatus("loading");
-    await new Promise((r) => setTimeout(r, 1800));
-    setStatus("success");
+    try {
+      if (WEB3FORMS_KEY) {
+        const res = await fetch(WEB3FORMS_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...form }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error(data.message ?? `Contact request failed: ${res.status}`);
+      } else {
+        const body = `${form.message}\n\n— ${form.name} <${form.email}>`;
+        window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(form.subject)}&body=${encodeURIComponent(body)}`;
+      }
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -141,7 +162,7 @@ export default function ContactPage() {
                       </button>
                     </motion.div>
                   ) : (
-                    <motion.form key="form" onSubmit={handleSubmit} className="space-y-5" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <motion.form key="form" noValidate onSubmit={handleSubmit} className="space-y-5" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Field label={t("label_name")} error={errors.name}>
                           <input name="name" value={form.name} onChange={handleChange} placeholder={t("ph_name")} className={INPUT_BASE} autoComplete="name" />

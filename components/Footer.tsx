@@ -8,7 +8,7 @@ const socials = [
   { icon: Code2, label: "GitHub", href: "https://github.com" },
   { icon: Briefcase, label: "LinkedIn", href: "https://linkedin.com" },
   { icon: Globe, label: "X / Twitter", href: "https://x.com" },
-  { icon: Mail, label: "Email", href: "mailto:raoudha@arofex.info" },
+  { icon: Mail, label: "Email", href: "mailto:fathallah.raoudha@gmail.com" },
 ];
 
 export default function Footer() {

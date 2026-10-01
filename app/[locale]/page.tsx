@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { ArrowRight, Download, ChevronDown } from "lucide-react";
+import { ArrowRight, Download, ChevronDown, Code2, Briefcase, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Button from "@/components/ui/Button";
 import SectionWrapper from "@/components/ui/SectionWrapper";
+import { buildAreas, targetRoles } from "@/lib/data";
 
 const HeroCanvas = dynamic(() => import("@/components/3d/HeroCanvas"), {
   ssr: false,
@@ -15,32 +15,6 @@ const HeroCanvas = dynamic(() => import("@/components/3d/HeroCanvas"), {
     </div>
   ),
 });
-
-function TypedRole() {
-  const t = useTranslations("home");
-  const roles = [t("role0"), t("role1"), t("role2"), t("role3")];
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => setIndex((i) => (i + 1) % roles.length), 3000);
-    return () => clearInterval(id);
-  }, [roles.length]);
-
-  return (
-    <AnimatePresence mode="wait">
-      <motion.span
-        key={index}
-        initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
-        transition={{ duration: 0.5 }}
-        className="inline-block gradient-text"
-      >
-        {roles[index]}
-      </motion.span>
-    </AnimatePresence>
-  );
-}
 
 const containerV = { hidden: {}, show: { transition: { staggerChildren: 0.04 } } };
 const letterV = {
@@ -70,10 +44,18 @@ export default function HomePage() {
     { value: "20+", label: t("stats_satisfaction") },
   ];
 
-  const features = [
-    { icon: "⚙️", title: t("f1_title"), desc: t("f1_desc"), color: "from-blue-500/20 to-indigo-500/10" },
-    { icon: "🎨", title: t("f2_title"), desc: t("f2_desc"), color: "from-green-500/20 to-emerald-500/10" },
-    { icon: "☁️", title: t("f3_title"), desc: t("f3_desc"), color: "from-cyan-500/20 to-blue-500/10" },
+  const cardTints = [
+    "from-violet-500/20 to-purple-500/10",
+    "from-blue-500/20 to-indigo-500/10",
+    "from-violet-500/20 to-fuchsia-500/10",
+    "from-cyan-500/20 to-blue-500/10",
+    "from-amber-500/20 to-orange-500/10",
+  ];
+
+  const socials = [
+    { icon: Briefcase, label: t("social_linkedin"), href: "https://linkedin.com" },
+    { icon: Code2, label: t("social_github"), href: "https://github.com" },
+    { icon: Mail, label: t("social_email"), href: "mailto:fathallah.raoudha@gmail.com" },
   ];
 
   return (
@@ -121,9 +103,15 @@ export default function HomePage() {
               </motion.h1>
             </div>
 
-            <div className="text-xl sm:text-2xl font-bold h-9 overflow-hidden">
-              <TypedRole />
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.65 }}
+              className="space-y-1.5"
+            >
+              <p className="text-xl sm:text-2xl font-bold gradient-text">{t("role_title")}</p>
+              <p className="text-sm sm:text-base font-mono text-zinc-400">{t("role_stack")}</p>
+            </motion.div>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -143,12 +131,50 @@ export default function HomePage() {
               <Button href="/projects" size="lg">
                 {t("cta_projects")} <ArrowRight size={18} />
               </Button>
-              <Button href="/contact" variant="outline" size="lg">
-                {t("cta_contact")}
-              </Button>
-              <Button href="/cv-raoudha-fathallah.pdf" variant="ghost" size="lg" external>
+              <Button href="/cv-raoudha-fathallah.pdf" variant="outline" size="lg" external>
                 <Download size={16} /> {t("cta_resume")}
               </Button>
+            </motion.div>
+
+            {/* Roles sought — what a recruiter scans for first */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 1.15 }}
+              className="space-y-2.5"
+            >
+              <p className="text-xs font-mono uppercase tracking-widest text-zinc-500">{t("avail_label")}</p>
+              <div className="flex flex-wrap gap-2">
+                {targetRoles.map((role) => (
+                  <span
+                    key={role}
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-500/8 border border-emerald-500/20 text-emerald-300"
+                  >
+                    {role}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Direct links, so the profile is one click away from the top of the page */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 1.3 }}
+              className="flex flex-wrap items-center gap-5"
+            >
+              {socials.map(({ icon: Icon, label, href }) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  target={href.startsWith("mailto") ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -2 }}
+                  className="inline-flex items-center gap-2 text-sm font-medium text-zinc-400 hover:text-indigo-400 transition-colors"
+                >
+                  <Icon size={16} /> {label}
+                </motion.a>
+              ))}
             </motion.div>
           </div>
 
@@ -204,19 +230,28 @@ export default function HomePage() {
             <p className="text-zinc-400 max-w-2xl mx-auto">{t("section_desc")}</p>
           </SectionWrapper>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {features.map((c, i) => (
-              <SectionWrapper key={c.title} delay={i * 0.15}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {buildAreas.map((area, i) => (
+              <SectionWrapper key={i} delay={i * 0.12}>
                 <motion.div
                   whileHover={{ y: -4 }}
                   transition={{ type: "spring" as const, stiffness: 300, damping: 20 }}
                   className="glass rounded-2xl p-6 border border-white/8 hover:border-indigo-500/30 transition-colors duration-300 h-full"
                 >
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${c.color} flex items-center justify-center text-2xl mb-4 border border-white/10`}>
-                    {c.icon}
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${cardTints[i]} flex items-center justify-center text-2xl mb-4 border border-white/10`}>
+                    {area.icon}
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">{c.title}</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">{c.desc}</p>
+                  <h3 className="text-lg font-bold text-white mb-3">{t(`wb${i}_title`)}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {area.stack.map((item) => (
+                      <span
+                        key={item}
+                        className="px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/8 text-zinc-400"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </motion.div>
               </SectionWrapper>
             ))}

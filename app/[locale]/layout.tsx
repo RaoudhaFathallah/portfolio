@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import CursorGlow from "@/components/CursorGlow";
 import ScrollProgress from "@/components/ScrollProgress";
 import HtmlLang from "@/components/HtmlLang";
 
@@ -32,7 +31,6 @@ export default async function LocaleLayout({ children, params }: Props) {
     <NextIntlClientProvider messages={messages}>
       <HtmlLang locale={locale} />
       <ScrollProgress />
-      <CursorGlow />
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />

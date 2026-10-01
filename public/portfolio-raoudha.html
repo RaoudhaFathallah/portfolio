@@ -28,16 +28,17 @@ body {
 /* ── Custom scrollbar ─────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #0d1821; }
-::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#2196F3,#4CAF50); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#2196F3,#8B5CF6); border-radius: 3px; }
 
 /* ── CSS Variables ───────────────────────────────────────────── */
 :root {
   --blue: #2196F3;
   --blue-dark: #1976D2;
-  --green: #4CAF50;
-  --green-dark: #388E3C;
+  --violet: #8B5CF6;
+  --violet-dark: #7C3AED;
+  --success: #4CAF50;
   --cyan: #00bcd4;
-  --bg: #0d1821;
+  --bg: #0B1120;
   --bg-card: rgba(255,255,255,0.04);
   --border: rgba(255,255,255,0.08);
   --text-muted: #71717a;
@@ -59,7 +60,7 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 60%, var(--cyan) 100%);
+  background: linear-gradient(135deg, var(--blue) 0%, var(--violet) 60%, var(--cyan) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -182,7 +183,7 @@ body {
   font-size: 20px;
   font-weight: 900;
   text-decoration: none;
-  background: linear-gradient(135deg,#2196F3,#4CAF50);
+  background: linear-gradient(135deg,#2196F3,#8B5CF6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -240,7 +241,7 @@ body {
   position: fixed;
   top: 0; left: 0;
   height: 2px;
-  background: linear-gradient(90deg,#2196F3,#4CAF50);
+  background: linear-gradient(90deg,#2196F3,#8B5CF6);
   z-index: 200;
   width: 0%;
   transition: width 0.1s;
@@ -257,7 +258,7 @@ body {
   overflow: hidden;
   background:
     radial-gradient(ellipse 80% 60% at 15% 20%, rgba(33,150,243,0.14) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 85% 80%, rgba(76,175,80,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 85% 80%, rgba(139,92,246,0.10) 0%, transparent 60%),
     radial-gradient(ellipse 40% 40% at 55% 30%, rgba(0,188,212,0.07) 0%, transparent 50%),
     #0d1821;
 }
@@ -322,33 +323,17 @@ body {
   margin-bottom: 24px;
 }
 .hero-name span { display: block; }
-.hero-roles {
+.hero-roles { margin-bottom: 20px; }
+.hero-role-title {
   font-size: clamp(1.1rem, 2.5vw, 1.4rem);
   font-weight: 700;
-  height: 36px;
-  margin-bottom: 20px;
-  position: relative;
+  margin-bottom: 6px;
 }
-.role-item {
-  position: absolute;
-  top: 0; left: 0;
-  opacity: 0;
-  transform: translateY(20px);
-  filter: blur(8px);
-  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;
-  white-space: nowrap;
-  pointer-events: none;
-}
-.role-item.entering {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0px);
-  pointer-events: auto;
-}
-.role-item.exiting {
-  opacity: 0;
-  transform: translateY(-20px);
-  filter: blur(8px);
+.hero-role-stack {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(0.78rem, 1.6vw, 0.9rem);
+  color: var(--text-sub);
+  letter-spacing: 0.01em;
 }
 .hero-desc {
   font-size: 15px;
@@ -358,6 +343,55 @@ body {
   margin-bottom: 36px;
 }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-avail { margin-top: 24px; }
+.hero-avail-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.hero-avail-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.hero-avail-tag {
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 500;
+  background: rgba(76,175,80,0.08);
+  border: 1px solid rgba(76,175,80,0.22);
+  color: #81c784;
+}
+.hero-socials { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 24px; }
+.hero-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-sub);
+  text-decoration: none;
+  transition: color 0.3s, transform 0.3s;
+}
+.hero-social:hover { color: var(--blue); transform: translateY(-2px); }
+
+/* ─────────────────────────────────────────────────────────────── */
+/* ── 2b. WHAT I BUILD ────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────── */
+.build-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+@media (max-width: 900px) { .build-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 580px) { .build-grid { grid-template-columns: 1fr; } }
+.build-card { border-radius: var(--radius); padding: 24px; transition: transform 0.3s, border-color 0.3s; }
+.build-card:hover { transform: translateY(-4px); border-color: rgba(33,150,243,0.3) !important; }
+.build-icon {
+  width: 48px; height: 48px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+}
+.build-title { font-size: 16px; font-weight: 800; margin-bottom: 12px; }
 .hero-scroll {
   position: absolute;
   bottom: 32px;
@@ -385,7 +419,7 @@ body {
   height: 340px;
   border-radius: 50%;
   position: relative;
-  background: radial-gradient(circle at 35% 35%, rgba(33,150,243,0.25), rgba(76,175,80,0.08) 60%, transparent);
+  background: radial-gradient(circle at 35% 35%, rgba(33,150,243,0.25), rgba(139,92,246,0.08) 60%, transparent);
   animation: float 6s ease-in-out infinite;
 }
 @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
@@ -402,7 +436,7 @@ body {
   position: absolute;
   inset: 32px;
   border-radius: 50%;
-  border: 1px solid rgba(76,175,80,0.2);
+  border: 1px solid rgba(139,92,246,0.2);
   animation: spin 14s linear infinite reverse;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -475,7 +509,7 @@ body {
 .profile-avatar {
   width: 88px; height: 88px;
   border-radius: 20px;
-  background: linear-gradient(135deg, var(--blue), var(--green));
+  background: linear-gradient(135deg, var(--blue), var(--violet));
   display: flex; align-items: center; justify-content: center;
   font-size: 28px; font-weight: 900; color: #fff;
   margin: 0 auto 16px;
@@ -529,85 +563,139 @@ body {
   letter-spacing: 0.12em;
   margin-bottom: 16px;
 }
-.skills-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
-@media (max-width: 900px) { .skills-grid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 480px) { .skills-grid { grid-template-columns: 1fr; } }
-.skill-card {
+.skill-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   border-radius: var(--radius-sm);
-  padding: 16px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #d4d4d8;
+  transition: transform 0.3s, border-color 0.3s, color 0.3s;
+}
+.skill-tag:hover { transform: translateY(-2px); border-color: rgba(33,150,243,0.35) !important; color: #fff; }
+.skill-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: var(--color, #2196F3); box-shadow: 0 0 6px var(--color, #2196F3); }
+/* ─────────────────────────────────────────────────────────────── */
+/* ── 3b. ARCHITECTURE ────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────── */
+.arch-stack { max-width: 620px; margin: 0 auto; }
+.arch-layer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  border-left-width: 3px !important;
+  border-left-style: solid !important;
   transition: transform 0.3s, border-color 0.3s;
 }
-.skill-card:hover { transform: translateY(-2px) scale(1.02); border-color: rgba(33,150,243,0.35) !important; }
-.skill-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.skill-name { font-size: 13px; font-weight: 600; color: #e4e4e7; }
-.skill-pct { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
-.skill-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
-.skill-fill {
-  height: 100%;
-  border-radius: 4px;
-  width: 0;
-  transition: width 1.2s cubic-bezier(.21,.47,.32,.98);
+.arch-layer:hover { transform: translateX(4px); }
+.arch-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--color); box-shadow: 0 0 8px var(--color); }
+.arch-name { font-size: 13px; font-weight: 700; color: #fff; }
+.arch-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.arch-arrow { display: flex; justify-content: center; padding: 6px 0; color: #3f3f46; }
+.arch-practices { margin-top: 36px; text-align: center; }
+.arch-practices-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
 }
+.arch-practice-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.arch-practice {
+  border-radius: var(--radius-sm);
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #d4d4d8;
+}
+.arch-note { font-size: 13px; color: var(--text-muted); max-width: 520px; margin: 20px auto 0; line-height: 1.6; }
 
 /* ─────────────────────────────────────────────────────────────── */
 /* ── 4. EXPERIENCE ───────────────────────────────────────────── */
 /* ─────────────────────────────────────────────────────────────── */
-.timeline { position: relative; }
+/* A single left rail reads better than alternating sides: the eye follows one
+   column, and every card gets the full width for its bullets. */
+.timeline { position: relative; padding-left: 36px; }
 .timeline::before {
   content: '';
   position: absolute;
-  left: 50%;
-  top: 0; bottom: 0;
-  width: 1px;
-  background: linear-gradient(to bottom, rgba(33,150,243,0.5), rgba(76,175,80,0.3), transparent);
-  transform: translateX(-50%);
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, var(--blue), rgba(139,92,246,0.5), transparent);
 }
-@media (max-width: 768px) {
-  .timeline::before { left: 16px; }
-}
-.timeline-item {
-  display: grid;
-  grid-template-columns: 1fr 24px 1fr;
-  gap: 0 20px;
-  margin-bottom: 40px;
-  align-items: start;
-}
-@media (max-width: 768px) {
-  .timeline-item { grid-template-columns: 28px 1fr; gap: 0 16px; }
-  .timeline-left { display: none; }
-}
+@media (max-width: 580px) { .timeline { padding-left: 26px; } .timeline::before { left: 3px; } }
+.timeline-item { position: relative; margin-bottom: 20px; }
 .timeline-dot {
+  position: absolute;
+  left: -36px;
+  top: 26px;
   width: 12px; height: 12px;
   border-radius: 50%;
   background: var(--blue);
-  box-shadow: 0 0 0 3px rgba(33,150,243,0.2);
-  margin-top: 20px;
-  justify-self: center;
+  box-shadow: 0 0 0 4px var(--bg);
 }
-.timeline-left { text-align: right; padding-top: 16px; }
-.timeline-period {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  color: var(--blue);
-  font-weight: 500;
-}
+@media (max-width: 580px) { .timeline-dot { left: -26px; top: 22px; width: 10px; height: 10px; } }
+/* The current role gets the live dot used elsewhere for availability. */
+.timeline-dot.current { background: var(--success); animation: pulse-dot 2s infinite; }
 .timeline-card {
   border-radius: var(--radius);
-  padding: 20px 24px;
-  transition: border-color 0.3s;
+  padding: 22px 24px;
+  transition: border-color 0.3s, transform 0.3s;
 }
-.timeline-card:hover { border-color: rgba(33,150,243,0.3) !important; }
-.timeline-mobile-period {
+.timeline-card:hover { transform: translateX(3px); border-color: rgba(33,150,243,0.3) !important; }
+.timeline-head { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+.timeline-avatar {
+  width: 40px; height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, var(--blue), var(--violet));
+}
+.timeline-headings { flex: 1; min-width: 0; }
+.timeline-period {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  color: var(--blue);
-  margin-bottom: 6px;
-  display: none;
+  color: var(--text-sub);
+  white-space: nowrap;
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
 }
-@media (max-width: 768px) { .timeline-mobile-period { display: block; } }
+@media (max-width: 580px) {
+  .timeline-head { flex-wrap: wrap; }
+  .timeline-period { order: 3; width: 100%; text-align: center; }
+}
 .timeline-role { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
-.timeline-company { font-size: 13px; color: var(--blue); font-weight: 600; margin-bottom: 10px; }
-.timeline-desc { font-size: 13px; color: var(--text-sub); line-height: 1.7; margin-bottom: 12px; }
+.timeline-company { font-size: 13px; color: var(--blue); font-weight: 600; }
+.timeline-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.timeline-bullets li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+.timeline-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--blue);
+}
 .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tech-tag {
   padding: 3px 10px;
@@ -620,8 +708,6 @@ body {
 }
 
 /* Even items: card on left */
-.timeline-item.even .timeline-left { text-align: left; }
-.timeline-item.even .timeline-left .timeline-period { text-align: left; }
 
 /* ─────────────────────────────────────────────────────────────── */
 /* ── 5. PROJECTS ─────────────────────────────────────────────── */
@@ -639,9 +725,32 @@ body {
   transition: all 0.2s;
 }
 .filter-btn:hover, .filter-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
-.projects-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-@media (max-width: 900px) { .projects-grid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 580px) { .projects-grid { grid-template-columns: 1fr; } }
+.projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; align-items: start; }
+/* The lead case study spans both columns and lays its blocks out side by side. */
+.project-card-featured { grid-column: 1 / -1; }
+@media (min-width: 861px) {
+  .project-card-featured .project-banner { height: 150px; }
+  .project-card-featured .project-body { display: grid; grid-template-columns: 1.1fr 1fr; gap: 0 32px; }
+  .project-card-featured .project-flags,
+  .project-card-featured .project-title,
+  .project-card-featured .project-subtitle,
+  .project-card-featured .project-desc { grid-column: 1 / -1; }
+  .project-card-featured .project-links { grid-column: 1 / -1; margin-top: 4px; }
+  .project-card-featured .project-title { font-size: 20px; }
+}
+.project-flags { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.project-flag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 9px;
+  border-radius: 100px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--blue), var(--violet));
+}
+.project-flags .project-cat { margin-bottom: 0; }
+@media (max-width: 860px) { .projects-grid { grid-template-columns: 1fr; } }
 .project-card {
   border-radius: var(--radius);
   overflow: hidden;
@@ -650,8 +759,19 @@ body {
 }
 .project-card:hover { transform: translateY(-6px); border-color: rgba(33,150,243,0.35) !important; }
 .project-card[hidden] { display: none; }
+/* Drop a screenshot in by adding <img class="project-shot" src="..." alt="..."> */
+/* as the first child of .project-banner; it then covers the gradient.          */
+.project-shot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+.project-card:hover .project-shot { transform: scale(1.03); }
 .project-banner {
-  height: 140px;
+  height: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -670,6 +790,53 @@ body {
 }
 .project-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
 .project-desc { font-size: 13px; color: var(--text-sub); line-height: 1.65; margin-bottom: 16px; }
+.project-subtitle {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--blue);
+  margin-bottom: 10px;
+}
+.project-block { margin-bottom: 16px; }
+.project-block-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.project-roles { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.project-roles li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.55;
+}
+.role-check { color: var(--blue); flex-shrink: 0; margin-top: 3px; }
+.project-impact {
+  border: 1px solid rgba(76,175,80,0.22);
+  background: rgba(76,175,80,0.06);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+.project-impact-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #4CAF50;
+  margin-bottom: 6px;
+}
+.project-impact-text { font-size: 13px; color: var(--text-sub); line-height: 1.55; }
 .project-links { display: flex; gap: 10px; }
 .project-link {
   display: inline-flex;
@@ -732,14 +899,14 @@ body {
   transition: border-color 0.2s;
 }
 .cert-item:hover { border-color: rgba(33,150,243,0.3) !important; }
-.cert-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg,var(--blue),var(--green)); flex-shrink: 0; }
+.cert-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg,var(--blue),var(--violet)); flex-shrink: 0; }
 .cert-text { font-size: 13px; font-weight: 500; color: #d4d4d8; }
 .lang-item { margin-bottom: 20px; }
 .lang-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
 .lang-name { font-size: 14px; font-weight: 600; }
 .lang-level { font-size: 12px; color: var(--text-muted); }
 .lang-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; }
-.lang-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg,var(--blue),var(--green)); width: 0; transition: width 1.4s cubic-bezier(.21,.47,.32,.98); }
+.lang-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg,var(--blue),var(--violet)); width: 0; transition: width 1.4s cubic-bezier(.21,.47,.32,.98); }
 
 /* ─────────────────────────────────────────────────────────────── */
 /* ── 8. CONTACT ──────────────────────────────────────────────── */
@@ -773,7 +940,7 @@ body {
   align-items: flex-start;
   gap: 10px;
 }
-.available-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); margin-top: 3px; animation: pulse-dot 2s infinite; flex-shrink: 0; }
+.available-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--success); margin-top: 3px; animation: pulse-dot 2s infinite; flex-shrink: 0; }
 .available-text h4 { font-size: 13px; font-weight: 700; color: #81c784; margin-bottom: 2px; }
 .available-text p { font-size: 12px; color: var(--text-sub); line-height: 1.5; }
 .contact-form { display: flex; flex-direction: column; gap: 16px; }
@@ -829,7 +996,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(33,150,243,0.06), rgba(76,175,80,0.05), transparent);
+  background: linear-gradient(135deg, rgba(33,150,243,0.06), rgba(139,92,246,0.05), transparent);
 }
 .cta-banner > * { position: relative; z-index: 1; }
 .cta-banner h2 { font-size: clamp(1.75rem,4vw,2.5rem); font-weight: 900; margin-bottom: 12px; }
@@ -856,7 +1023,7 @@ footer::before {
 .footer-logo {
   font-size: 22px;
   font-weight: 900;
-  background: linear-gradient(135deg,#2196F3,#4CAF50);
+  background: linear-gradient(135deg,#2196F3,#8B5CF6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -969,9 +1136,6 @@ footer::before {
   .nav-links.open { display: flex; }
   .nav-links a { padding: 12px 16px; font-size: 15px; border-radius: 12px; }
 
-  /* Timeline : corriger l'ordre des items "even" */
-  .timeline-item.even > div:first-child { order: 2; }
-  .timeline-item.even .timeline-dot { order: 1; }
 
   .section { padding: 64px 0; }
   .section-header { margin-bottom: 40px; }
@@ -1003,8 +1167,9 @@ footer::before {
       <li><a href="#hero"    data-i18n="nav_home">Accueil</a></li>
       <li><a href="#about"   data-i18n="nav_about">À propos</a></li>
       <li><a href="#skills"  data-i18n="nav_skills">Compétences</a></li>
-      <li><a href="#experience" data-i18n="nav_exp">Expériences</a></li>
+      <li><a href="#architecture" data-i18n="nav_arch">Architecture</a></li>
       <li><a href="#projects" data-i18n="nav_projects">Projets</a></li>
+      <li><a href="#experience" data-i18n="nav_exp">Expériences</a></li>
       <li><a href="#education" data-i18n="nav_edu">Formation</a></li>
       <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
     </ul>
@@ -1038,16 +1203,28 @@ footer::before {
         <span class="gradient-text">Fathallah</span>
       </h1>
       <div class="hero-roles">
-        <div class="role-item gradient-text" data-i18n="role0">Développeuse FullStack</div>
-        <div class="role-item gradient-text" data-i18n="role1">Experte .NET &amp; Angular</div>
-        <div class="role-item gradient-text" data-i18n="role2">Architecte Logicielle</div>
-        <div class="role-item gradient-text" data-i18n="role3">Passionnée UI/UX</div>
+        <div class="hero-role-title gradient-text" data-i18n="role_title">Développeuse Full Stack .NET</div>
+        <div class="hero-role-stack" data-i18n="role_stack">C# · ASP.NET Core · Angular · React · Azure</div>
       </div>
-      <p class="hero-desc" data-i18n="hero_desc">Développeuse FullStack avec 4+ ans d'expérience, spécialisée en .NET Core, Angular, React, Blazor et TypeScript. Je conçois des solutions robustes allant des ERP aux plateformes web innovantes.</p>
+      <p class="hero-desc" data-i18n="hero_desc">Je conçois et développe des applications web robustes, scalables et maintenables, du backend à l'interface utilisateur.</p>
       <div class="hero-ctas">
         <a href="#projects" class="btn btn-primary"><span data-i18n="hero_cta1">Voir mes projets</span> <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        <a href="#contact" class="btn btn-outline" data-i18n="hero_cta2">Me contacter</a>
-        <a href="#" class="btn btn-ghost"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> <span data-i18n="hero_cv">Télécharger CV</span></a>
+        <a href="#" class="btn btn-outline"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> <span data-i18n="hero_cv">Télécharger mon CV</span></a>
+      </div>
+      <div class="hero-avail">
+        <div class="hero-avail-label" data-i18n="avail_label">Disponible pour</div>
+        <div class="hero-avail-tags">
+          <span class="hero-avail-tag">Full Stack .NET</span>
+          <span class="hero-avail-tag">Senior .NET Developer</span>
+          <span class="hero-avail-tag">Lead Developer</span>
+          <span class="hero-avail-tag">Software Engineer</span>
+          <span class="hero-avail-tag">Remote / International</span>
+        </div>
+      </div>
+      <div class="hero-socials">
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="hero-social"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg> LinkedIn</a>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hero-social"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.37.6.1.83-.26.83-.58v-2.03c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.004 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.9 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</a>
+        <a href="mailto:fathallah.raoudha@gmail.com" class="hero-social"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</a>
       </div>
     </div>
     <!-- Visual 3D Three.js -->
@@ -1071,6 +1248,45 @@ footer::before {
       <div class="reveal delay-1"><div class="stat-value gradient-text">10+</div><div class="stat-label" data-i18n="stat_projects">Projets livrés</div></div>
       <div class="reveal delay-2"><div class="stat-value gradient-text">5</div><div class="stat-label" data-i18n="stat_companies">Entreprises</div></div>
       <div class="reveal delay-3"><div class="stat-value gradient-text">20+</div><div class="stat-label" data-i18n="stat_tech">Technologies maîtrisées</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- ── 2b. WHAT I BUILD ─────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="what-i-build" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label" data-i18n="wb_label">Ce que je construis</span>
+      <h2 class="section-title"><span data-i18n="wb_title">Mes domaines</span> <span class="gradient-text" data-i18n="wb_title_hl">d'intervention</span></h2>
+    </div>
+    <div class="build-grid">
+      <div class="glass build-card reveal">
+        <div class="build-icon" style="background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(168,85,247,0.1))">🧩</div>
+        <div class="build-title" data-i18n="wb0_title">Applications métier</div>
+        <div class="tech-tags"><span class="tech-tag">ERP</span><span class="tech-tag">CRM</span><span class="tech-tag">WMS</span><span class="tech-tag">TMS</span></div>
+      </div>
+      <div class="glass build-card reveal">
+        <div class="build-icon" style="background:linear-gradient(135deg,rgba(33,150,243,0.2),rgba(99,102,241,0.1))">⚙️</div>
+        <div class="build-title" data-i18n="wb1_title">Développement backend</div>
+        <div class="tech-tags"><span class="tech-tag">.NET</span><span class="tech-tag">ASP.NET Core</span><span class="tech-tag">REST API</span><span class="tech-tag">SQL Server</span></div>
+      </div>
+      <div class="glass build-card reveal">
+        <div class="build-icon" style="background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(124,58,237,0.1))">🎨</div>
+        <div class="build-title" data-i18n="wb2_title">Développement frontend</div>
+        <div class="tech-tags"><span class="tech-tag">Angular</span><span class="tech-tag">React</span><span class="tech-tag">Next.js</span><span class="tech-tag">Blazor</span></div>
+      </div>
+      <div class="glass build-card reveal">
+        <div class="build-icon" style="background:linear-gradient(135deg,rgba(0,188,212,0.2),rgba(33,150,243,0.1))">☁️</div>
+        <div class="build-title" data-i18n="wb3_title">Cloud & DevOps</div>
+        <div class="tech-tags"><span class="tech-tag">Azure</span><span class="tech-tag">Azure DevOps</span><span class="tech-tag">Docker</span><span class="tech-tag">CI/CD</span></div>
+      </div>
+      <div class="glass build-card reveal">
+        <div class="build-icon" style="background:linear-gradient(135deg,rgba(255,152,0,0.2),rgba(255,193,7,0.1))">🏗️</div>
+        <div class="build-title" data-i18n="wb4_title">Architecture logicielle</div>
+        <div class="tech-tags"><span class="tech-tag">Clean Architecture</span><span class="tech-tag">CQRS</span><span class="tech-tag">SOLID</span><span class="tech-tag">Microservices</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1107,7 +1323,7 @@ footer::before {
             </div>
             <div class="profile-info-row">
               <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              raoudha@arofex.info
+              fathallah.raoudha@gmail.com
             </div>
           </div>
           <a href="#contact" class="btn btn-primary"><span data-i18n="card_cta">Parlons-en</span> <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
@@ -1167,189 +1383,148 @@ footer::before {
     <!-- Backend -->
     <div class="skills-cat reveal">
       <div class="skills-cat-label">⚙️ <span data-i18n="cat_backend">Backend</span></div>
-      <div class="skills-grid">
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">.NET Core / .NET 8</span><span class="skill-pct">92%</span></div><div class="skill-bar"><div class="skill-fill" style="--color:#512BD4" data-pct="92"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">C#</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-fill" style="--color:#9B59B6" data-pct="90"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">PHP / Laravel</span><span class="skill-pct">78%</span></div><div class="skill-bar"><div class="skill-fill" style="--color:#777BB3" data-pct="78"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Java</span><span class="skill-pct">62%</span></div><div class="skill-bar"><div class="skill-fill" style="--color:#F89820" data-pct="62"></div></div></div>
+      <div class="skill-tags">
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#9B59B6"></span>C#</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#512BD4"></span>ASP.NET Core</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#512BD4"></span>.NET 8 / .NET 10</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#6C5CE7"></span>Web API</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#8E44AD"></span>EF Core</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#7D5FFF"></span>CQRS</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#A55EEA"></span>Clean Architecture</span>
       </div>
     </div>
 
     <!-- Frontend -->
     <div class="skills-cat reveal">
       <div class="skills-cat-label">🎨 <span data-i18n="cat_frontend">Frontend</span></div>
-      <div class="skills-grid">
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Angular</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="90" style="--color:#DD0031"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">React / Next.js</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="88" style="--color:#61DAFB"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Blazor</span><span class="skill-pct">76%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="76" style="--color:#512BD4"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">TypeScript</span><span class="skill-pct">87%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="87" style="--color:#3178C6"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">JavaScript</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="85" style="--color:#F7DF1E"></div></div></div>
+      <div class="skill-tags">
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#DD0031"></span>Angular</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#61DAFB"></span>React</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#E4E4E7"></span>Next.js</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#512BD4"></span>Blazor</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#3178C6"></span>TypeScript</span>
       </div>
     </div>
 
-    <!-- Mobile -->
+    <!-- Database -->
     <div class="skills-cat reveal">
-      <div class="skills-cat-label">📱 <span data-i18n="cat_mobile">Mobile</span></div>
-      <div class="skills-grid">
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Android (Java)</span><span class="skill-pct">70%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="70" style="--color:#3DDC84"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Xamarin</span><span class="skill-pct">65%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="65" style="--color:#3498DB"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Ionic</span><span class="skill-pct">65%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="65" style="--color:#3880FF"></div></div></div>
+      <div class="skills-cat-label">🗄️ <span data-i18n="cat_db">Base de données</span></div>
+      <div class="skill-tags">
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#CC2927"></span>SQL Server</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#00618A"></span>MySQL</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#8E44AD"></span>Entity Framework Core</span>
       </div>
     </div>
 
-    <!-- Databases -->
+    <!-- Cloud &amp; DevOps -->
     <div class="skills-cat reveal">
-      <div class="skills-cat-label">🗄️ <span data-i18n="cat_db">Bases de données</span></div>
-      <div class="skills-grid">
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">SQL Server</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="88" style="--color:#CC2927"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">MySQL</span><span class="skill-pct">82%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="82" style="--color:#00618A"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Firebase</span><span class="skill-pct">68%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="68" style="--color:#FFCA28"></div></div></div>
+      <div class="skills-cat-label">☁️ <span data-i18n="cat_devops">Cloud &amp; DevOps</span></div>
+      <div class="skill-tags">
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#0089D6"></span>Azure</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#0078D4"></span>Azure DevOps</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#2496ED"></span>Docker</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#F05032"></span>GitHub</span>
       </div>
     </div>
 
-    <!-- DevOps -->
+    <!-- Architecture -->
     <div class="skills-cat reveal">
-      <div class="skills-cat-label">☁️ <span data-i18n="cat_devops">DevOps &amp; Cloud</span></div>
-      <div class="skills-grid">
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Azure DevOps</span><span class="skill-pct">76%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="76" style="--color:#0089D6"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Git / GitHub</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="85" style="--color:#F05032"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Docker</span><span class="skill-pct">68%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="68" style="--color:#2496ED"></div></div></div>
-      </div>
-    </div>
-
-    <!-- Design -->
-    <div class="skills-cat reveal">
-      <div class="skills-cat-label">✏️ <span data-i18n="cat_design">Design &amp; UX</span></div>
-      <div class="skills-grid">
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Figma</span><span class="skill-pct">76%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="76" style="--color:#F24E1E"></div></div></div>
-        <div class="glass skill-card"><div class="skill-head"><span class="skill-name">Adobe XD</span><span class="skill-pct">70%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="70" style="--color:#FF61F6"></div></div></div>
+      <div class="skills-cat-label">🏛️ <span data-i18n="cat_arch">Architecture</span></div>
+      <div class="skill-tags">
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#A55EEA"></span>Clean Architecture</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#00B894"></span>Microservices</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#0984E3"></span>REST API</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#7D5FFF"></span>CQRS</span>
+        <span class="glass skill-tag"><span class="skill-dot" style="--color:#FDCB6E"></span>SOLID</span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════════ -->
-<!-- ── 4. EXPERIENCE ────────────────────────────────────────── -->
+<!-- ── 3b. ARCHITECTURE ─────────────────────────────────────── -->
 <!-- ══════════════════════════════════════════════════════════ -->
-<section id="experience" class="section">
+<section id="architecture" class="section">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-label" data-i18n="exp_label">Parcours professionnel</span>
-      <h2 class="section-title"><span data-i18n="exp_title">Expériences</span> <span class="gradient-text" data-i18n="exp_title_hl">&amp; Projets</span></h2>
+      <span class="section-label" data-i18n="arch_label">Comment je structure le code</span>
+      <h2 class="section-title"><span data-i18n="arch_title">Architecture</span> <span class="gradient-text" data-i18n="arch_title_hl">applicative</span></h2>
+      <p data-i18n="arch_sub">Le trajet d'une requête dans les services .NET que je développe, de l'interface jusqu'à la base.</p>
     </div>
-    <div class="timeline">
-
-      <!-- 0 -->
-      <div class="timeline-item reveal">
-        <div class="timeline-left"><div class="timeline-period">09/2024 – Présent</div></div>
-        <div class="timeline-dot"></div>
+    <div class="arch-stack">
+      <div class="glass arch-layer reveal" style="border-color:#61DAFB">
+        <span class="arch-dot" style="--color:#61DAFB"></span>
         <div>
-          <div class="glass timeline-card">
-            <div class="timeline-mobile-period">09/2024 – <span data-i18n="exp_present">Présent</span></div>
-            <div class="timeline-role" data-i18n="exp0_role">Développeuse FullStack</div>
-            <div class="timeline-company">Skillsquad</div>
-            <div class="timeline-desc" data-i18n="exp0_desc">Développement de Teleseminar, une plateforme de séminaires en ligne, et Kwabb. Création d'interfaces dynamiques avec Blazor et React/Next.js, développement d'APIs robustes avec .NET 8, gestion des sessions live, système d'abonnement et espace membres.</div>
-            <div class="tech-tags"><span class="tech-tag">.NET 8</span><span class="tech-tag">Blazor</span><span class="tech-tag">React</span><span class="tech-tag">Next.js</span><span class="tech-tag">TypeScript</span><span class="tech-tag">SQL Server</span></div>
-          </div>
+          <div class="arch-name">Frontend</div>
+          <div class="arch-desc" data-i18n="arch0_desc">Interfaces Angular, React, Next.js et Blazor</div>
         </div>
       </div>
-
-      <!-- 1 -->
-      <div class="timeline-item even reveal">
+      <div class="arch-arrow" aria-hidden="true"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="glass arch-layer reveal" style="border-color:#0984E3">
+        <span class="arch-dot" style="--color:#0984E3"></span>
         <div>
-          <div class="glass timeline-card">
-            <div class="timeline-mobile-period">2022 – 2024</div>
-            <div class="timeline-role" data-i18n="exp1_role">Développeuse FullStack</div>
-            <div class="timeline-company">EdenTeam</div>
-            <div class="timeline-desc" data-i18n="exp1_desc">Développement de trois produits majeurs : Flex Transport (WMS/TMS/CRM avec intégration Google Maps pour le suivi temps réel), SMTP (ERP complet : commercial, comptabilité, RH, logistique) et AEI GPAO (logiciel de planification de production industrielle). Utilisation intensive de .NET Core, Angular et Azure DevOps.</div>
-            <div class="tech-tags"><span class="tech-tag">.NET Core</span><span class="tech-tag">Angular</span><span class="tech-tag">React</span><span class="tech-tag">TypeScript</span><span class="tech-tag">SQL Server</span><span class="tech-tag">Azure DevOps</span><span class="tech-tag">Google Maps API</span></div>
-          </div>
-        </div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-left"><div class="timeline-period">2022 – 2024</div></div>
-      </div>
-
-      <!-- 2 -->
-      <div class="timeline-item reveal">
-        <div class="timeline-left"><div class="timeline-period">03/2021 – 11/2021</div></div>
-        <div class="timeline-dot"></div>
-        <div>
-          <div class="glass timeline-card">
-            <div class="timeline-mobile-period">03/2021 – 11/2021</div>
-            <div class="timeline-role" data-i18n="exp2_role">Développeuse FullStack</div>
-            <div class="timeline-company">InoCod — Maroc</div>
-            <div class="timeline-desc" data-i18n="exp2_desc">Conception et développement d'une plateforme de job matching sous Laravel : système de matching algorithmique entre offres d'emploi et profils candidats, espace recruteur, tableau de bord analytique et notifications en temps réel.</div>
-            <div class="tech-tags"><span class="tech-tag">Laravel</span><span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">JavaScript</span><span class="tech-tag">HTML/CSS</span></div>
-          </div>
+          <div class="arch-name">REST API</div>
+          <div class="arch-desc" data-i18n="arch1_desc">Contrats HTTP, authentification et gestion des erreurs</div>
         </div>
       </div>
-
-      <!-- 3 -->
-      <div class="timeline-item even reveal">
+      <div class="arch-arrow" aria-hidden="true"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="glass arch-layer reveal" style="border-color:#512BD4">
+        <span class="arch-dot" style="--color:#512BD4"></span>
         <div>
-          <div class="glass timeline-card">
-            <div class="timeline-mobile-period">11/2018 – 04/2019</div>
-            <div class="timeline-role" data-i18n="exp3_role">Développeuse .NET</div>
-            <div class="timeline-company">SIPEXE</div>
-            <div class="timeline-desc" data-i18n="exp3_desc">Développement de solutions logicielles pour Golden Group Four et Come Canada. Création d'interfaces de gestion et modules métier en C# / .NET, développement de rapports et tableaux de bord.</div>
-            <div class="tech-tags"><span class="tech-tag">C#</span><span class="tech-tag">.NET</span><span class="tech-tag">SQL Server</span><span class="tech-tag">HTML/CSS</span><span class="tech-tag">JavaScript</span></div>
-          </div>
-        </div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-left"><div class="timeline-period">11/2018 – 04/2019</div></div>
-      </div>
-
-      <!-- 4 -->
-      <div class="timeline-item reveal">
-        <div class="timeline-left"><div class="timeline-period">10/2017 – 09/2018</div></div>
-        <div class="timeline-dot"></div>
-        <div>
-          <div class="glass timeline-card">
-            <div class="timeline-mobile-period">10/2017 – 09/2018</div>
-            <div class="timeline-role" data-i18n="exp4_role">Développeuse Web</div>
-            <div class="timeline-company">MACSI Centre</div>
-            <div class="timeline-desc" data-i18n="exp4_desc">Développement et maintenance d'applications web pour la gestion interne du centre. Création de modules PHP, gestion de bases de données MySQL, développement frontend HTML/CSS/JavaScript.</div>
-            <div class="tech-tags"><span class="tech-tag">PHP</span><span class="tech-tag">JavaScript</span><span class="tech-tag">HTML/CSS</span><span class="tech-tag">MySQL</span></div>
-          </div>
+          <div class="arch-name">ASP.NET Core</div>
+          <div class="arch-desc" data-i18n="arch2_desc">Contrôleurs, middlewares et injection de dépendances</div>
         </div>
       </div>
-
-      <!-- 5 -->
-      <div class="timeline-item even reveal">
+      <div class="arch-arrow" aria-hidden="true"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="glass arch-layer reveal" style="border-color:#7D5FFF">
+        <span class="arch-dot" style="--color:#7D5FFF"></span>
         <div>
-          <div class="glass timeline-card">
-            <div class="timeline-mobile-period">05/2019 – 10/2019</div>
-            <div class="timeline-role" data-i18n="exp5_role">Web Master</div>
-            <div class="timeline-company">STE SAHEL TV — Chaine IPTV</div>
-            <div class="timeline-desc" data-i18n="exp5_desc">Gestion et animation du site web de la chaîne IPTV : création de contenus, optimisation SEO, intégration de lecteurs vidéo, gestion des médias et administration WordPress.</div>
-            <div class="tech-tags"><span class="tech-tag">WordPress</span><span class="tech-tag">HTML/CSS</span><span class="tech-tag">JavaScript</span><span class="tech-tag">SEO</span></div>
-          </div>
-        </div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-left"><div class="timeline-period">05/2019 – 10/2019</div></div>
-      </div>
-
-      <!-- 6 -->
-      <div class="timeline-item reveal">
-        <div class="timeline-left"><div class="timeline-period">2017</div></div>
-        <div class="timeline-dot"></div>
-        <div>
-          <div class="glass timeline-card">
-            <div class="timeline-mobile-period">2017</div>
-            <div class="timeline-role" data-i18n="exp6_role">Développeuse Mobile (PFE)</div>
-            <div class="timeline-company">TechnoWeb</div>
-            <div class="timeline-desc" data-i18n="exp6_desc">Projet de fin d'études : développement d'une application mobile Android native en Java. Conception de l'interface utilisateur, intégration d'APIs REST, persistance locale avec SQLite et déploiement sur Play Store.</div>
-            <div class="tech-tags"><span class="tech-tag">Java</span><span class="tech-tag">Android SDK</span><span class="tech-tag">SQLite</span></div>
-          </div>
+          <div class="arch-name">Application / CQRS</div>
+          <div class="arch-desc" data-i18n="arch3_desc">Commands, Queries, Handlers et validation</div>
         </div>
       </div>
-
+      <div class="arch-arrow" aria-hidden="true"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="glass arch-layer reveal" style="border-color:#A55EEA">
+        <span class="arch-dot" style="--color:#A55EEA"></span>
+        <div>
+          <div class="arch-name">Domain</div>
+          <div class="arch-desc" data-i18n="arch4_desc">Entités, règles métier et invariants</div>
+        </div>
+      </div>
+      <div class="arch-arrow" aria-hidden="true"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="glass arch-layer reveal" style="border-color:#00B894">
+        <span class="arch-dot" style="--color:#00B894"></span>
+        <div>
+          <div class="arch-name">Infrastructure</div>
+          <div class="arch-desc" data-i18n="arch5_desc">EF Core, repositories et services externes</div>
+        </div>
+      </div>
+      <div class="arch-arrow" aria-hidden="true"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="glass arch-layer reveal" style="border-color:#CC2927">
+        <span class="arch-dot" style="--color:#CC2927"></span>
+        <div>
+          <div class="arch-name">SQL Server</div>
+          <div class="arch-desc" data-i18n="arch6_desc">Persistance, migrations et index</div>
+        </div>
+      </div>
+    </div>
+    <div class="arch-practices reveal">
+      <div class="arch-practices-label" data-i18n="arch_practices">Principes appliqués</div>
+      <div class="arch-practice-tags">
+        <span class="glass arch-practice">Clean Architecture</span>
+        <span class="glass arch-practice">CQRS</span>
+        <span class="glass arch-practice">SOLID</span>
+        <span class="glass arch-practice">Dependency Injection</span>
+        <span class="glass arch-practice">EF Core</span>
+        <span class="glass arch-practice">REST API</span>
+      </div>
+      <p class="arch-note" data-i18n="arch_note">Les dépendances pointent vers l'intérieur : le domaine ne connaît ni la base de données, ni le framework web.</p>
     </div>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════════ -->
-<!-- ── 5. PROJECTS ──────────────────────────────────────────── -->
+<!-- ── 4. PROJECTS ──────────────────────────────────────────── -->
 <!-- ══════════════════════════════════════════════════════════ -->
 <section id="projects" class="section">
   <div class="container">
@@ -1366,13 +1541,32 @@ footer::before {
     </div>
     <div class="projects-grid" id="projectsGrid">
 
-      <div class="glass project-card reveal" data-cat="fullstack">
-        <div class="project-banner" style="background:linear-gradient(135deg,rgba(33,150,243,0.3),rgba(0,188,212,0.2))">🚚</div>
+      <div class="glass project-card project-card-featured reveal" data-cat="fullstack">
+        <div class="project-banner" style="background:linear-gradient(135deg,rgba(99,102,241,0.3),rgba(33,150,243,0.2))"><!-- <img class="project-shot" src="projects/teleseminar.png" alt="Teleseminar"> -->🎓</div>
         <div class="project-body">
-          <div class="project-cat">Fullstack</div>
-          <div class="project-title">Flex Transport</div>
-          <div class="project-desc" data-i18n="p1_desc">Application de gestion de transport intégrant WMS, TMS et CRM. Suivi temps réel des livraisons via Google Maps, gestion des commandes, tournées, entrepôts et reporting avancé pour optimiser la supply chain.</div>
-          <div class="tech-tags" style="margin-bottom:14px"><span class="tech-tag">React</span><span class="tech-tag">Angular</span><span class="tech-tag">.NET Core</span><span class="tech-tag">Google Maps API</span><span class="tech-tag">SQL Server</span></div>
+          <div class="project-flags"><span class="project-flag" data-i18n="proj_featured">Projet phare</span><span class="project-cat">Fullstack</span></div>
+          <div class="project-title">Teleseminar / Kvabb</div>
+          <div class="project-subtitle" data-i18n="p2_subtitle">SaaS · E-learning · Live Events</div>
+          <div class="project-desc" data-i18n="p2_desc">Plateforme de séminaires et de formation à distance couvrant les sessions live, l'espace membres et les abonnements.</div>
+          <div class="project-block">
+            <div class="project-block-label" data-i18n="proj_role_title">Mon rôle</div>
+            <ul class="project-roles">
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p2_role1">Développement des APIs .NET 8 en Clean Architecture et CQRS</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p2_role2">Interfaces Blazor, React / Next.js et Angular</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p2_role3">Authentification et gestion des accès membres</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p2_role4">Système d'abonnement et espace membres</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p2_role5">Diffusion et gestion des sessions live</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p2_role6">Tableau de bord administrateur et suivi des inscriptions</span></li>
+            </ul>
+          </div>
+          <div class="project-block">
+            <div class="project-block-label" data-i18n="proj_tech_title">Technologies</div>
+            <div class="tech-tags"><span class="tech-tag">.NET 8</span><span class="tech-tag">C#</span><span class="tech-tag">Clean Architecture</span><span class="tech-tag">CQRS</span><span class="tech-tag">Angular</span><span class="tech-tag">React</span><span class="tech-tag">Next.js</span><span class="tech-tag">Blazor</span><span class="tech-tag">TypeScript</span><span class="tech-tag">SQL Server</span><span class="tech-tag">Azure</span></div>
+          </div>
+          <div class="project-impact">
+            <div class="project-impact-label"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> <span data-i18n="proj_impact_title">Impact</span></div>
+            <div class="project-impact-text" data-i18n="p2_impact">Organisation de séminaires en direct et gestion des abonnés depuis une seule interface.</div>
+          </div>
           <div class="project-links">
             <a href="#" class="project-link"><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.37.6.1.83-.26.83-.58v-2.03c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.004 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.9 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</a>
             <a href="#" class="project-link"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Demo</a>
@@ -1381,12 +1575,30 @@ footer::before {
       </div>
 
       <div class="glass project-card reveal delay-1" data-cat="fullstack">
-        <div class="project-banner" style="background:linear-gradient(135deg,rgba(99,102,241,0.3),rgba(33,150,243,0.2))">🎓</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,rgba(33,150,243,0.3),rgba(0,188,212,0.2))">🚚</div>
         <div class="project-body">
           <div class="project-cat">Fullstack</div>
-          <div class="project-title">Teleseminar / Kwabb</div>
-          <div class="project-desc" data-i18n="p2_desc">Plateforme de séminaires en ligne et de formation à distance. Gestion d'événements live, streaming vidéo, système d'abonnement, espace membres et tableau de bord administrateur.</div>
-          <div class="tech-tags" style="margin-bottom:14px"><span class="tech-tag">.NET 8</span><span class="tech-tag">Blazor</span><span class="tech-tag">React</span><span class="tech-tag">Next.js</span><span class="tech-tag">TypeScript</span></div>
+          <div class="project-title">Flex Transport</div>
+          <div class="project-subtitle" data-i18n="p1_subtitle">WMS / TMS / CRM</div>
+          <div class="project-desc" data-i18n="p1_desc">Plateforme de gestion du transport permettant de piloter les commandes, les tournées, les véhicules, les entrepôts et les livraisons.</div>
+          <div class="project-block">
+            <div class="project-block-label" data-i18n="proj_role_title">Mon rôle</div>
+            <ul class="project-roles">
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p1_role1">Développement des APIs .NET Core</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p1_role2">Développement des interfaces Angular et React</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p1_role3">Intégration de Google Maps pour le suivi des véhicules</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p1_role4">Modélisation et optimisation de la base SQL Server</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p1_role5">Maintenance et évolution des modules métier</span></li>
+            </ul>
+          </div>
+          <div class="project-block">
+            <div class="project-block-label" data-i18n="proj_tech_title">Technologies</div>
+            <div class="tech-tags"><span class="tech-tag">.NET Core</span><span class="tech-tag">C#</span><span class="tech-tag">Angular</span><span class="tech-tag">React</span><span class="tech-tag">SQL Server</span><span class="tech-tag">Google Maps API</span></div>
+          </div>
+          <div class="project-impact">
+            <div class="project-impact-label"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> <span data-i18n="proj_impact_title">Impact</span></div>
+            <div class="project-impact-text" data-i18n="p1_impact">Suivi des livraisons en temps réel et centralisation des opérations de transport sur une seule plateforme.</div>
+          </div>
           <div class="project-links">
             <a href="#" class="project-link"><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.37.6.1.83-.26.83-.58v-2.03c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.004 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.9 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</a>
             <a href="#" class="project-link"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Demo</a>
@@ -1395,12 +1607,30 @@ footer::before {
       </div>
 
       <div class="glass project-card reveal delay-2" data-cat="fullstack">
-        <div class="project-banner" style="background:linear-gradient(135deg,rgba(76,175,80,0.25),rgba(0,150,136,0.15))">📊</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,rgba(139,92,246,0.25),rgba(124,58,237,0.15))">📊</div>
         <div class="project-body">
           <div class="project-cat">Fullstack</div>
           <div class="project-title">SMTP — ERP</div>
-          <div class="project-desc" data-i18n="p3_desc">ERP complet couvrant la gestion commerciale, comptabilité, ressources humaines et logistique. Modules interconnectés, reporting temps réel et gestion multi-sociétés.</div>
-          <div class="tech-tags" style="margin-bottom:14px"><span class="tech-tag">.NET Core</span><span class="tech-tag">Angular</span><span class="tech-tag">TypeScript</span><span class="tech-tag">SQL Server</span><span class="tech-tag">Azure DevOps</span></div>
+          <div class="project-subtitle" data-i18n="p3_subtitle">ERP multi-sociétés</div>
+          <div class="project-desc" data-i18n="p3_desc">ERP couvrant la gestion commerciale, la comptabilité, les ressources humaines et la logistique.</div>
+          <div class="project-block">
+            <div class="project-block-label" data-i18n="proj_role_title">Mon rôle</div>
+            <ul class="project-roles">
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p3_role1">Développement des modules commercial, comptabilité, RH et logistique</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p3_role2">APIs .NET Core et interfaces Angular / TypeScript</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p3_role3">Conception du modèle de données SQL Server</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p3_role4">Reporting temps réel et gestion multi-sociétés</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p3_role5">Intégration continue sous Azure DevOps</span></li>
+            </ul>
+          </div>
+          <div class="project-block">
+            <div class="project-block-label" data-i18n="proj_tech_title">Technologies</div>
+            <div class="tech-tags"><span class="tech-tag">.NET Core</span><span class="tech-tag">C#</span><span class="tech-tag">Angular</span><span class="tech-tag">TypeScript</span><span class="tech-tag">SQL Server</span><span class="tech-tag">Azure DevOps</span></div>
+          </div>
+          <div class="project-impact">
+            <div class="project-impact-label"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> <span data-i18n="proj_impact_title">Impact</span></div>
+            <div class="project-impact-text" data-i18n="p3_impact">Remplacement d'outils séparés par un système unique couvrant les processus de l'entreprise.</div>
+          </div>
           <div class="project-links">
             <a href="#" class="project-link"><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.37.6.1.83-.26.83-.58v-2.03c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.004 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.9 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</a>
             <a href="#" class="project-link"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Demo</a>
@@ -1413,8 +1643,26 @@ footer::before {
         <div class="project-body">
           <div class="project-cat">Fullstack</div>
           <div class="project-title">AEI — GPAO</div>
-          <div class="project-desc" data-i18n="p4_desc">Logiciel de Gestion de Production Assistée par Ordinateur. Planification des ordres de fabrication, gestion des nomenclatures, suivi des stocks matières et contrôle qualité en production.</div>
-          <div class="tech-tags" style="margin-bottom:14px"><span class="tech-tag">.NET Core</span><span class="tech-tag">Angular</span><span class="tech-tag">TypeScript</span><span class="tech-tag">SQL Server</span></div>
+          <div class="project-subtitle" data-i18n="p4_subtitle">Planification de production industrielle</div>
+          <div class="project-desc" data-i18n="p4_desc">Logiciel de Gestion de Production Assistée par Ordinateur pour la planification et le suivi d'atelier.</div>
+          <div class="project-block">
+            <div class="project-block-label" data-i18n="proj_role_title">Mon rôle</div>
+            <ul class="project-roles">
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p4_role1">Planification des ordres de fabrication</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p4_role2">Gestion des nomenclatures et des gammes de production</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p4_role3">Suivi des stocks matières et du contrôle qualité</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p4_role4">Développement .NET Core et Angular</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p4_role5">Modélisation SQL Server des données de production</span></li>
+            </ul>
+          </div>
+          <div class="project-block">
+            <div class="project-block-label" data-i18n="proj_tech_title">Technologies</div>
+            <div class="tech-tags"><span class="tech-tag">.NET Core</span><span class="tech-tag">C#</span><span class="tech-tag">Angular</span><span class="tech-tag">TypeScript</span><span class="tech-tag">SQL Server</span><span class="tech-tag">Azure DevOps</span></div>
+          </div>
+          <div class="project-impact">
+            <div class="project-impact-label"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> <span data-i18n="proj_impact_title">Impact</span></div>
+            <div class="project-impact-text" data-i18n="p4_impact">Visibilité sur l'avancement des ordres de fabrication et sur les stocks matières en production.</div>
+          </div>
           <div class="project-links">
             <a href="#" class="project-link"><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.37.6.1.83-.26.83-.58v-2.03c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.004 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.9 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</a>
             <a href="#" class="project-link"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Demo</a>
@@ -1423,16 +1671,204 @@ footer::before {
       </div>
 
       <div class="glass project-card reveal delay-1" data-cat="fullstack">
-        <div class="project-banner" style="background:linear-gradient(135deg,rgba(255,152,0,0.25),rgba(255,193,7,0.15))">💼</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,rgba(255,152,0,0.25),rgba(255,193,7,0.15))">🤝</div>
         <div class="project-body">
           <div class="project-cat">Fullstack</div>
           <div class="project-title">Job Matching</div>
-          <div class="project-desc" data-i18n="p5_desc">Plateforme de mise en relation employeurs/candidats avec algorithme de matching. Profils dynamiques, système de recommandations, messagerie intégrée et tableau de bord recruteur.</div>
-          <div class="tech-tags" style="margin-bottom:14px"><span class="tech-tag">Laravel</span><span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">JavaScript</span><span class="tech-tag">Bootstrap</span></div>
+          <div class="project-subtitle" data-i18n="p5_subtitle">Plateforme de recrutement</div>
+          <div class="project-desc" data-i18n="p5_desc">Plateforme de mise en relation entre employeurs et candidats, articulée autour d'un moteur de matching.</div>
+          <div class="project-block">
+            <div class="project-block-label" data-i18n="proj_role_title">Mon rôle</div>
+            <ul class="project-roles">
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p5_role1">Conception et développement complet sous Laravel</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p5_role2">Algorithme de matching entre offres et profils candidats</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p5_role3">Espace recruteur et tableau de bord analytique</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p5_role4">Notifications en temps réel</span></li>
+              <li><svg class="role-check" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p5_role5">Modélisation de la base MySQL</span></li>
+            </ul>
+          </div>
+          <div class="project-block">
+            <div class="project-block-label" data-i18n="proj_tech_title">Technologies</div>
+            <div class="tech-tags"><span class="tech-tag">Laravel</span><span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">JavaScript</span><span class="tech-tag">Bootstrap</span></div>
+          </div>
+          <div class="project-impact">
+            <div class="project-impact-label"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> <span data-i18n="proj_impact_title">Impact</span></div>
+            <div class="project-impact-text" data-i18n="p5_impact">Mise en relation automatique des candidats avec les offres correspondant à leur profil.</div>
+          </div>
           <div class="project-links">
             <a href="#" class="project-link"><svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.37.6.1.83-.26.83-.58v-2.03c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.004 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.9 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</a>
             <a href="#" class="project-link"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Demo</a>
           </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- ── 5. EXPERIENCE ────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="experience" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label" data-i18n="exp_label">Parcours professionnel</span>
+      <h2 class="section-title"><span data-i18n="exp_title">Expériences</span> <span class="gradient-text" data-i18n="exp_title_hl">&amp; Projets</span></h2>
+    </div>
+    <div class="timeline">
+
+      <!-- 0 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot current"></div>
+        <div class="glass timeline-card">
+          <div class="timeline-head">
+            <div class="timeline-avatar">S</div>
+            <div class="timeline-headings">
+              <div class="timeline-role" data-i18n="exp0_role">Développeuse FullStack</div>
+              <div class="timeline-company">Skillsquad</div>
+            </div>
+            <div class="timeline-period" data-i18n="exp0_period">09/2024 — Aujourd’hui</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li data-i18n="exp0_bullet1">Développement de Teleseminar, plateforme de séminaires en ligne, et de Kwabb</li>
+            <li data-i18n="exp0_bullet2">APIs .NET 8 structurées en Clean Architecture et CQRS</li>
+            <li data-i18n="exp0_bullet3">Interfaces Blazor et React / Next.js</li>
+            <li data-i18n="exp0_bullet4">Gestion des sessions live et du système d’abonnement</li>
+            <li data-i18n="exp0_bullet5">Espace membres et tableau de bord administrateur</li>
+          </ul>
+          <div class="tech-tags"><span class="tech-tag">.NET 8</span><span class="tech-tag">Blazor</span><span class="tech-tag">React</span><span class="tech-tag">Next.js</span><span class="tech-tag">TypeScript</span><span class="tech-tag">SQL Server</span></div>
+        </div>
+      </div>
+
+      <!-- 1 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="glass timeline-card">
+          <div class="timeline-head">
+            <div class="timeline-avatar">E</div>
+            <div class="timeline-headings">
+              <div class="timeline-role" data-i18n="exp1_role">Développeuse FullStack</div>
+              <div class="timeline-company">EdenTeam</div>
+            </div>
+            <div class="timeline-period" data-i18n="exp1_period">2022 — 2024</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li data-i18n="exp1_bullet1">Flex Transport : WMS / TMS / CRM avec suivi temps réel via Google Maps</li>
+            <li data-i18n="exp1_bullet2">SMTP : ERP complet — commercial, comptabilité, RH et logistique</li>
+            <li data-i18n="exp1_bullet3">AEI GPAO : logiciel de planification de production industrielle</li>
+            <li data-i18n="exp1_bullet4">Développement .NET Core et Angular sur les trois produits</li>
+            <li data-i18n="exp1_bullet5">Intégration continue et déploiements sous Azure DevOps</li>
+          </ul>
+          <div class="tech-tags"><span class="tech-tag">.NET Core</span><span class="tech-tag">Angular</span><span class="tech-tag">React</span><span class="tech-tag">TypeScript</span><span class="tech-tag">SQL Server</span><span class="tech-tag">Azure DevOps</span><span class="tech-tag">Google Maps API</span></div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="glass timeline-card">
+          <div class="timeline-head">
+            <div class="timeline-avatar">I</div>
+            <div class="timeline-headings">
+              <div class="timeline-role" data-i18n="exp2_role">Développeuse FullStack</div>
+              <div class="timeline-company">InoCod — Maroc</div>
+            </div>
+            <div class="timeline-period" data-i18n="exp2_period">03/2021 — 11/2021</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li data-i18n="exp2_bullet1">Conception et développement d’une plateforme de job matching sous Laravel</li>
+            <li data-i18n="exp2_bullet2">Algorithme de matching entre offres d’emploi et profils candidats</li>
+            <li data-i18n="exp2_bullet3">Espace recruteur et tableau de bord analytique</li>
+            <li data-i18n="exp2_bullet4">Notifications en temps réel</li>
+          </ul>
+          <div class="tech-tags"><span class="tech-tag">Laravel</span><span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">JavaScript</span><span class="tech-tag">HTML/CSS</span></div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="glass timeline-card">
+          <div class="timeline-head">
+            <div class="timeline-avatar">S</div>
+            <div class="timeline-headings">
+              <div class="timeline-role" data-i18n="exp5_role">Web Master</div>
+              <div class="timeline-company">STE SAHEL TV — Chaine IPTV</div>
+            </div>
+            <div class="timeline-period" data-i18n="exp5_period">05/2019 — 10/2019</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li data-i18n="exp5_bullet1">Gestion et animation du site web de la chaîne IPTV</li>
+            <li data-i18n="exp5_bullet2">Intégration des lecteurs vidéo et gestion des médias</li>
+            <li data-i18n="exp5_bullet3">Optimisation SEO et création de contenus</li>
+            <li data-i18n="exp5_bullet4">Administration WordPress</li>
+          </ul>
+          <div class="tech-tags"><span class="tech-tag">WordPress</span><span class="tech-tag">HTML/CSS</span><span class="tech-tag">JavaScript</span><span class="tech-tag">SEO</span></div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="glass timeline-card">
+          <div class="timeline-head">
+            <div class="timeline-avatar">S</div>
+            <div class="timeline-headings">
+              <div class="timeline-role" data-i18n="exp3_role">Développeuse .NET</div>
+              <div class="timeline-company">SIPEXE</div>
+            </div>
+            <div class="timeline-period" data-i18n="exp3_period">11/2018 — 04/2019</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li data-i18n="exp3_bullet1">Solutions logicielles pour Golden Group Four et Come Canada</li>
+            <li data-i18n="exp3_bullet2">Interfaces de gestion et modules métier en C# / .NET</li>
+            <li data-i18n="exp3_bullet3">Développement de rapports et de tableaux de bord</li>
+          </ul>
+          <div class="tech-tags"><span class="tech-tag">C#</span><span class="tech-tag">.NET</span><span class="tech-tag">SQL Server</span><span class="tech-tag">HTML/CSS</span><span class="tech-tag">JavaScript</span></div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="glass timeline-card">
+          <div class="timeline-head">
+            <div class="timeline-avatar">M</div>
+            <div class="timeline-headings">
+              <div class="timeline-role" data-i18n="exp4_role">Développeuse Web</div>
+              <div class="timeline-company">MACSI Centre</div>
+            </div>
+            <div class="timeline-period" data-i18n="exp4_period">10/2017 — 09/2018</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li data-i18n="exp4_bullet1">Développement et maintenance des applications web de gestion interne</li>
+            <li data-i18n="exp4_bullet2">Modules métier en PHP</li>
+            <li data-i18n="exp4_bullet3">Gestion des bases de données MySQL</li>
+            <li data-i18n="exp4_bullet4">Développement frontend HTML / CSS / JavaScript</li>
+          </ul>
+          <div class="tech-tags"><span class="tech-tag">PHP</span><span class="tech-tag">JavaScript</span><span class="tech-tag">HTML/CSS</span><span class="tech-tag">MySQL</span></div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="glass timeline-card">
+          <div class="timeline-head">
+            <div class="timeline-avatar">T</div>
+            <div class="timeline-headings">
+              <div class="timeline-role" data-i18n="exp6_role">Développeuse Mobile (PFE)</div>
+              <div class="timeline-company">TechnoWeb</div>
+            </div>
+            <div class="timeline-period" data-i18n="exp6_period">2017</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li data-i18n="exp6_bullet1">Projet de fin d’études : application mobile Android native en Java</li>
+            <li data-i18n="exp6_bullet2">Conception de l’interface utilisateur</li>
+            <li data-i18n="exp6_bullet3">Intégration d’APIs REST et persistance locale SQLite</li>
+            <li data-i18n="exp6_bullet4">Déploiement sur le Play Store</li>
+          </ul>
+          <div class="tech-tags"><span class="tech-tag">Java</span><span class="tech-tag">Android SDK</span><span class="tech-tag">SQLite</span></div>
         </div>
       </div>
 
@@ -1538,9 +1974,9 @@ footer::before {
         <div class="glass contact-info-card">
           <div class="contact-info-title" data-i18n="contact_info_title">Informations de contact</div>
           <div class="contact-info-desc" data-i18n="contact_info_desc">Disponible pour des missions freelance, des postes FullStack (CDI/CDD) et des projets innovants. N'hésitez pas à me contacter pour discuter de vos besoins.</div>
-          <a href="mailto:raoudha@arofex.info" class="contact-detail">
+          <a href="mailto:fathallah.raoudha@gmail.com" class="contact-detail">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            raoudha@arofex.info
+            fathallah.raoudha@gmail.com
           </a>
           <a href="https://linkedin.com" target="_blank" class="contact-detail">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -1590,10 +2026,11 @@ footer::before {
             <label class="form-label" for="message">Message</label>
             <textarea class="form-textarea" id="message" placeholder="Décrivez votre projet, vos besoins ou votre opportunité…"></textarea>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
-              <span class="form-error" style="display:block;">Le message doit comporter au moins 20 caractères</span>
+              <span class="form-error">Le message doit comporter au moins 20 caractères</span>
               <span class="char-counter" id="charCounter">0 / 20 min</span>
             </div>
           </div>
+          <div id="formError" class="form-error" style="display:none;margin-bottom:12px;"></div>
           <button type="submit" class="btn btn-primary" id="submitBtn">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             Envoyer
@@ -1629,13 +2066,14 @@ footer::before {
       <div>
         <div class="footer-col-title">Navigation</div>
         <ul class="footer-links">
-          <li><a href="#hero">Accueil</a></li>
-          <li><a href="#about">À propos</a></li>
-          <li><a href="#skills">Compétences</a></li>
-          <li><a href="#experience">Expériences</a></li>
-          <li><a href="#projects">Projets</a></li>
-          <li><a href="#education">Formation</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#hero" data-i18n="nav_home">Accueil</a></li>
+          <li><a href="#about" data-i18n="nav_about">À propos</a></li>
+          <li><a href="#skills" data-i18n="nav_skills">Compétences</a></li>
+          <li><a href="#architecture" data-i18n="nav_arch">Architecture</a></li>
+          <li><a href="#projects" data-i18n="nav_projects">Projets</a></li>
+          <li><a href="#experience" data-i18n="nav_exp">Expériences</a></li>
+          <li><a href="#education" data-i18n="nav_edu">Formation</a></li>
+          <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
         </ul>
       </div>
       <div>
@@ -1647,7 +2085,7 @@ footer::before {
           <a href="https://linkedin.com" target="_blank" class="social-btn" aria-label="LinkedIn">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
           </a>
-          <a href="mailto:raoudha@arofex.info" class="social-btn" aria-label="Email">
+          <a href="mailto:fathallah.raoudha@gmail.com" class="social-btn" aria-label="Email">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </a>
         </div>
@@ -1697,22 +2135,6 @@ const ro = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 revealEls.forEach(el => ro.observe(el));
 
-/* ── Skill bars animate on reveal ────────────────────────── */
-const barObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('.skill-fill').forEach(fill => {
-        const pct = fill.dataset.pct;
-        const color = getComputedStyle(fill).getPropertyValue('--color').trim() || '#2196F3';
-        fill.style.background = `linear-gradient(90deg, ${color}cc, ${color})`;
-        fill.style.width = pct + '%';
-      });
-      barObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.2 });
-document.querySelectorAll('.skills-cat').forEach(cat => barObs.observe(cat));
-
 /* ── Language bars animate on reveal ─────────────────────── */
 const langObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -1727,24 +2149,10 @@ const langObs = new IntersectionObserver(entries => {
 const langSection = document.getElementById('certifications');
 if (langSection) langObs.observe(langSection);
 
-/* ── Role slider (blur + fade + slide comme home) ─────────── */
-const roles = document.querySelectorAll('.role-item');
-let roleIdx = 0;
-roles[0].classList.add('entering');
-setInterval(() => {
-  const cur = roles[roleIdx];
-  roleIdx = (roleIdx + 1) % roles.length;
-  const nxt = roles[roleIdx];
-  cur.classList.remove('entering');
-  cur.classList.add('exiting');
-  nxt.classList.add('entering');
-  setTimeout(() => cur.classList.remove('exiting'), 500);
-}, 3000);
-
 /* ── Orb dots ─────────────────────────────────────────────── */
 const orbDots = document.getElementById('orbDots');
 if (orbDots) {
-  const colors = ['#2196F3','#4CAF50','#00bcd4','#90caf9','#81c784'];
+  const colors = ['#2196F3','#8B5CF6','#00bcd4','#90caf9','#a78bfa'];
   const rings = [{ count:12, r:150, dur:18 }, { count:8, r:125, dur:13 }, { count:6, r:100, dur:22 }];
   rings.forEach(ring => {
     for (let i = 0; i < ring.count; i++) {
@@ -1800,16 +2208,56 @@ function validate() {
   return ok;
 }
 
-document.getElementById('contactForm').addEventListener('submit', e => {
+/* Paste the Web3Forms access key below to collect messages in an inbox (the key is
+   public by design — it only allows posting to the address it was issued for).
+   Left empty, the visitor's mail client is opened instead. */
+const CONTACT_EMAIL = 'fathallah.raoudha@gmail.com';
+const WEB3FORMS_KEY = '';
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+const SEND_ICON = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+
+document.getElementById('contactForm').addEventListener('submit', async e => {
   e.preventDefault();
   if (!validate()) return;
   const btn = document.getElementById('submitBtn');
+  const errBox = document.getElementById('formError');
+  errBox.style.display = 'none';
   btn.disabled = true;
-  btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Envoi en cours…';
-  setTimeout(() => {
+  btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> ' + (currentLang === 'fr' ? 'Envoi en cours…' : 'Sending…');
+
+  const data = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    subject: document.getElementById('subject').value,
+    message: msg.value,
+  };
+
+  try {
+    if (WEB3FORMS_KEY) {
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.assign({ access_key: WEB3FORMS_KEY }, data)),
+      });
+      const result = await res.json();
+      if (!res.ok || !result.success) throw new Error(result.message || 'Contact request failed: ' + res.status);
+    } else {
+      const body = data.message + '\n\n— ' + data.name + ' <' + data.email + '>';
+      window.location.href = 'mailto:' + CONTACT_EMAIL +
+        '?subject=' + encodeURIComponent(data.subject) +
+        '&body=' + encodeURIComponent(body);
+    }
     document.getElementById('contactForm').style.display = 'none';
     document.getElementById('formSuccess').classList.add('show');
-  }, 1200);
+  } catch (err) {
+    errBox.textContent = currentLang === 'fr'
+      ? "L'envoi a échoué. Réessayez ou écrivez-moi directement à " + CONTACT_EMAIL + '.'
+      : 'Sending failed. Please retry or email me directly at ' + CONTACT_EMAIL + '.';
+    errBox.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = SEND_ICON + ' ' + (currentLang === 'fr' ? 'Envoyer' : 'Send');
+  }
 });
 
 function resetForm() {
@@ -1817,7 +2265,8 @@ function resetForm() {
   document.getElementById('contactForm').style.display = 'flex';
   document.getElementById('formSuccess').classList.remove('show');
   document.getElementById('submitBtn').disabled = false;
-  document.getElementById('submitBtn').innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> ' + (currentLang === 'fr' ? 'Envoyer' : 'Send');
+  document.getElementById('submitBtn').innerHTML = SEND_ICON + ' ' + (currentLang === 'fr' ? 'Envoyer' : 'Send');
+  document.getElementById('formError').style.display = 'none';
   counter.textContent = '0 / 20 min';
 }
 
@@ -1826,65 +2275,395 @@ let currentLang = 'fr';
 
 const translations = {
   fr: {
-    /* nav */ nav_home:'Accueil', nav_about:'À propos', nav_skills:'Compétences', nav_exp:'Expériences', nav_projects:'Projets', nav_edu:'Formation', nav_contact:'Contact',
-    /* hero */ hero_badge:'Disponible pour de nouveaux projets', hero_greeting:'Bonjour 👋 Je suis', hero_desc:"Développeuse FullStack avec 4+ ans d'expérience, spécialisée en .NET Core, Angular, React, Blazor et TypeScript. Je conçois des solutions robustes allant des ERP aux plateformes web innovantes.", hero_cta1:'Voir mes projets', hero_cta2:'Me contacter', hero_cv:'Télécharger CV',
-    /* roles */ role0:'Développeuse FullStack', role1:'Experte .NET & Angular', role2:'Architecte Logicielle', role3:'Passionnée UI/UX',
-    /* stats */ stat_years:"Ans d'expérience", stat_projects:'Projets livrés', stat_companies:'Entreprises', stat_tech:'Technologies maîtrisées',
-    /* about */ about_label:'Faire connaissance', about_title:'À propos', about_title_hl:'de moi', about_sub:"Développeuse FullStack passionnée par la création de solutions digitales performantes, maintenables et centrées sur l'utilisateur.",
-    /* card */ card_role:'Développeuse FullStack', card_location:'Tunisie — Remote', card_exp:"4+ ans d'expérience", card_open:'Ouverte aux opportunités', card_cta:'Parlons-en',
-    /* bio */ bio_title:'Coder avec', bio_title_hl:'passion & précision', bio_p1:"Je suis Raoudha Fathallah, Développeuse FullStack avec plus de 4 ans d'expérience dans la conception et le développement d'applications web et mobiles. Mon parcours m'a menée de la gestion de projets ERP complexes à la création de plateformes SaaS modernes, toujours avec le souci de la qualité et de la performance.", bio_p2:"Spécialisée dans l'écosystème Microsoft (.NET Core, .NET 8, C#, Blazor) côté backend, et dans les frameworks modernes (Angular, React, Next.js) côté frontend, j'interviens sur toutes les étapes du cycle de vie logiciel : conception, développement, tests et déploiement.", bio_p3:"Curieuse et autodidacte, je reste constamment à la veille technologique. Je travaille en méthodologie Agile/Scrum et j'accorde une grande importance à la communication. Mon objectif : transformer des besoins métier complexes en expériences digitales élégantes.",
-    /* tags */ tag1:'Agile / Scrum', tag2:'Clean Architecture', tag3:'Orientée résultats', tag4:'Veille technologique',
-    /* values */ val_label:'Ce qui me guide', val_title:'Valeurs', val_title_hl:'professionnelles', val1_title:'Code de qualité', val1_desc:"Code propre, testé, documenté — je m'engage pour la maintenabilité à long terme.", val2_title:'Collaboration', val2_desc:'Travail en équipe Agile, communication transparente et partage des connaissances.', val3_title:'Amélioration continue', val3_desc:'Apprentissage constant, certifications et veille active sur les nouvelles technologies.',
-    /* skills */ skills_label:'Ma boîte à outils', skills_title:'Compétences &', skills_title_hl:'Technologies', cat_backend:'Backend', cat_frontend:'Frontend', cat_mobile:'Mobile', cat_db:'Bases de données', cat_devops:'DevOps & Cloud', cat_design:'Design & UX',
-    /* experience */ exp_label:'Parcours professionnel', exp_title:'Expériences', exp_title_hl:'& Projets', exp_present:'Présent',
-    exp0_role:'Développeuse FullStack', exp0_desc:"Développement de Teleseminar, une plateforme de séminaires en ligne, et Kwabb. Création d'interfaces dynamiques avec Blazor et React/Next.js, développement d'APIs robustes avec .NET 8, gestion des sessions live, système d'abonnement et espace membres.",
-    exp1_role:'Développeuse FullStack', exp1_desc:"Développement de trois produits majeurs : Flex Transport (WMS/TMS/CRM avec intégration Google Maps pour le suivi temps réel), SMTP (ERP complet : commercial, comptabilité, RH, logistique) et AEI GPAO (logiciel de planification de production industrielle).",
-    exp2_role:'Développeuse FullStack', exp2_desc:"Conception et développement d'une plateforme de job matching sous Laravel : système de matching algorithmique entre offres d'emploi et profils candidats, espace recruteur, tableau de bord analytique et notifications en temps réel.",
-    exp3_role:'Développeuse .NET', exp3_desc:"Développement de solutions logicielles pour Golden Group Four et Come Canada. Création d'interfaces de gestion et modules métier en C# / .NET, développement de rapports et tableaux de bord.",
-    exp4_role:'Développeuse Web', exp4_desc:"Développement et maintenance d'applications web pour la gestion interne du centre. Création de modules PHP, gestion de bases de données MySQL, développement frontend HTML/CSS/JavaScript.",
-    exp5_role:'Web Master', exp5_desc:"Gestion et animation du site web de la chaîne IPTV : création de contenus, optimisation SEO, intégration de lecteurs vidéo, gestion des médias et administration WordPress.",
-    exp6_role:'Développeuse Mobile (PFE)', exp6_desc:"Projet de fin d'études : développement d'une application mobile Android native en Java. Conception de l'interface utilisateur, intégration d'APIs REST, persistance locale avec SQLite et déploiement sur Play Store.",
-    /* projects */ proj_label:'Mes réalisations', proj_title:'Projets', proj_title_hl:'sélectionnés', proj_sub:"Une sélection de projets représentatifs — de la gestion de transport à la plateforme SaaS en passant par l'ERP industriel.", filter_all:'Tous',
-    p1_desc:"Application de gestion de transport intégrant WMS, TMS et CRM. Suivi temps réel des livraisons via Google Maps, gestion des commandes, tournées, entrepôts et reporting avancé pour optimiser la supply chain.",
-    p2_desc:"Plateforme de séminaires en ligne et de formation à distance. Gestion d'événements live, streaming vidéo, système d'abonnement, espace membres et tableau de bord administrateur.",
-    p3_desc:"ERP complet couvrant la gestion commerciale, comptabilité, ressources humaines et logistique. Modules interconnectés, reporting temps réel et gestion multi-sociétés.",
-    p4_desc:"Logiciel de Gestion de Production Assistée par Ordinateur. Planification des ordres de fabrication, gestion des nomenclatures, suivi des stocks matières et contrôle qualité en production.",
-    p5_desc:"Plateforme de mise en relation employeurs/candidats avec algorithme de matching. Profils dynamiques, système de recommandations, messagerie intégrée et tableau de bord recruteur.",
-    /* education */ edu_label:'Parcours académique', edu_title:'Formation', edu_title_hl:'& Diplômes',
-    /* certs & langs */ cert_label:'Certifications & Langues', cert_title:'Certifications', cert_title_hl:'& Langues', lang_label:'Maîtrise des langues',
-    lang0_name:'Arabe', lang0_level:'Bilingue (Langue maternelle)', lang1_name:'Français', lang1_level:'Courant (C1)', lang2_name:'Anglais', lang2_level:'Professionnel (B2)', lang3_name:'Italien', lang3_level:'Débutant (A1)',
-    /* contact */ contact_label:'Restons en contact', contact_title:'Contactez-', contact_title_hl:'moi', contact_sub:"Un projet, une opportunité ou juste envie d'échanger ? N'hésitez pas à me contacter — je réponds généralement sous 24h.", contact_info_title:'Informations de contact', contact_info_desc:"Disponible pour des missions freelance, des postes FullStack (CDI/CDD) et des projets innovants. N'hésitez pas à me contacter pour discuter de vos besoins.",
+    nav_home: "Accueil",
+    nav_about: "À propos",
+    nav_skills: "Compétences",
+    nav_exp: "Expériences",
+    nav_projects: "Projets",
+    nav_edu: "Formation",
+    nav_contact: "Contact",
+    hero_badge: "Disponible pour de nouveaux projets",
+    hero_greeting: "Bonjour 👋 Je suis",
+    hero_desc: "Je conçois et développe des applications web robustes, scalables et maintenables, du backend à l'interface utilisateur.",
+    hero_cta1: "Voir mes projets",
+    hero_cv: "Télécharger mon CV",
+    stat_years: "Ans d'expérience",
+    stat_projects: "Projets livrés",
+    stat_companies: "Entreprises",
+    stat_tech: "Technologies maîtrisées",
+    about_label: "Faire connaissance",
+    about_title: "À propos",
+    about_title_hl: "de moi",
+    about_sub: "Développeuse FullStack passionnée par la création de solutions digitales performantes, maintenables et centrées sur l'utilisateur.",
+    card_role: "Développeuse FullStack",
+    card_location: "Tunisie — Remote",
+    card_exp: "4+ ans d'expérience",
+    card_open: "Ouverte aux opportunités",
+    card_cta: "Parlons-en",
+    bio_title: "Coder avec",
+    bio_title_hl: "passion & précision",
+    bio_p1: "Je suis Raoudha Fathallah, Développeuse FullStack avec plus de 4 ans d'expérience dans la conception et le développement d'applications web et mobiles. Mon parcours m'a menée de la gestion de projets ERP complexes à la création de plateformes SaaS modernes, toujours avec le souci de la qualité et de la performance.",
+    bio_p2: "Spécialisée dans l'écosystème Microsoft (.NET Core, .NET 8, C#, Blazor) côté backend, et dans les frameworks modernes (Angular, React, Next.js) côté frontend, j'interviens sur toutes les étapes du cycle de vie logiciel : conception, développement, tests et déploiement.",
+    bio_p3: "Curieuse et autodidacte, je reste constamment à la veille technologique. Je travaille en méthodologie Agile/Scrum et j'accorde une grande importance à la communication. Mon objectif : transformer des besoins métier complexes en expériences digitales élégantes.",
+    tag1: "Agile / Scrum",
+    tag2: "Clean Architecture",
+    tag3: "Orientée résultats",
+    tag4: "Veille technologique",
+    val_label: "Ce qui me guide",
+    val_title: "Valeurs",
+    val_title_hl: "professionnelles",
+    val1_title: "Code de qualité",
+    val1_desc: "Code propre, testé, documenté — je m'engage pour la maintenabilité à long terme.",
+    val2_title: "Collaboration",
+    val2_desc: "Travail en équipe Agile, communication transparente et partage des connaissances.",
+    val3_title: "Amélioration continue",
+    val3_desc: "Apprentissage constant, certifications et veille active sur les nouvelles technologies.",
+    skills_label: "Ma boîte à outils",
+    skills_title: "Compétences &",
+    skills_title_hl: "Technologies",
+    cat_backend: "Backend",
+    cat_frontend: "Frontend",
+    cat_db: "Base de données",
+    cat_devops: "Cloud & DevOps",
+    exp_label: "Parcours professionnel",
+    exp_title: "Expériences",
+    exp_title_hl: "& Projets",
+    exp0_role: "Développeuse FullStack",
+    exp1_role: "Développeuse FullStack",
+    exp2_role: "Développeuse FullStack",
+    exp3_role: "Développeuse .NET",
+    exp4_role: "Développeuse Web",
+    exp5_role: "Web Master",
+    exp6_role: "Développeuse Mobile (PFE)",
+    proj_label: "Mes réalisations",
+    proj_title: "Projets",
+    proj_title_hl: "sélectionnés",
+    proj_sub: "Une sélection de projets représentatifs — de la gestion de transport à la plateforme SaaS en passant par l'ERP industriel.",
+    filter_all: "Tous",
+    p1_desc: "Plateforme de gestion du transport permettant de piloter les commandes, les tournées, les véhicules, les entrepôts et les livraisons.",
+    p2_desc: "Plateforme de séminaires et de formation à distance couvrant les sessions live, l'espace membres et les abonnements.",
+    p3_desc: "ERP couvrant la gestion commerciale, la comptabilité, les ressources humaines et la logistique.",
+    p4_desc: "Logiciel de Gestion de Production Assistée par Ordinateur pour la planification et le suivi d'atelier.",
+    p5_desc: "Plateforme de mise en relation entre employeurs et candidats, articulée autour d'un moteur de matching.",
+    edu_label: "Parcours académique",
+    edu_title: "Formation",
+    edu_title_hl: "& Diplômes",
+    cert_label: "Certifications & Langues",
+    cert_title: "Certifications",
+    cert_title_hl: "& Langues",
+    lang_label: "Maîtrise des langues",
+    lang0_name: "Arabe",
+    lang0_level: "Bilingue (Langue maternelle)",
+    lang1_name: "Français",
+    lang1_level: "Courant (C1)",
+    lang2_name: "Anglais",
+    lang2_level: "Professionnel (B2)",
+    lang3_name: "Italien",
+    lang3_level: "Débutant (A1)",
+    contact_label: "Restons en contact",
+    contact_title: "Contactez-",
+    contact_title_hl: "moi",
+    contact_sub: "Un projet, une opportunité ou juste envie d'échanger ? N'hésitez pas à me contacter — je réponds généralement sous 24h.",
+    contact_info_title: "Informations de contact",
+    contact_info_desc: "Disponible pour des missions freelance, des postes FullStack (CDI/CDD) et des projets innovants. N'hésitez pas à me contacter pour discuter de vos besoins.",
+    cat_arch: "Architecture",
+    nav_arch: "Architecture",
+    arch_label: "Comment je structure le code",
+    arch_title: "Architecture",
+    arch_title_hl: "applicative",
+    arch_sub: "Le trajet d'une requête dans les services .NET que je développe, de l'interface jusqu'à la base.",
+    arch_practices: "Principes appliqués",
+    arch_note: "Les dépendances pointent vers l'intérieur : le domaine ne connaît ni la base de données, ni le framework web.",
+    arch0_desc: "Interfaces Angular, React, Next.js et Blazor",
+    arch1_desc: "Contrats HTTP, authentification et gestion des erreurs",
+    arch2_desc: "Contrôleurs, middlewares et injection de dépendances",
+    arch3_desc: "Commands, Queries, Handlers et validation",
+    arch4_desc: "Entités, règles métier et invariants",
+    arch5_desc: "EF Core, repositories et services externes",
+    arch6_desc: "Persistance, migrations et index",
+    exp0_period: "09/2024 — Aujourd’hui",
+    exp0_bullet1: "Développement de Teleseminar, plateforme de séminaires en ligne, et de Kwabb",
+    exp0_bullet2: "APIs .NET 8 structurées en Clean Architecture et CQRS",
+    exp0_bullet3: "Interfaces Blazor et React / Next.js",
+    exp0_bullet4: "Gestion des sessions live et du système d’abonnement",
+    exp0_bullet5: "Espace membres et tableau de bord administrateur",
+    exp1_period: "2022 — 2024",
+    exp1_bullet1: "Flex Transport : WMS / TMS / CRM avec suivi temps réel via Google Maps",
+    exp1_bullet2: "SMTP : ERP complet — commercial, comptabilité, RH et logistique",
+    exp1_bullet3: "AEI GPAO : logiciel de planification de production industrielle",
+    exp1_bullet4: "Développement .NET Core et Angular sur les trois produits",
+    exp1_bullet5: "Intégration continue et déploiements sous Azure DevOps",
+    exp2_period: "03/2021 — 11/2021",
+    exp2_bullet1: "Conception et développement d’une plateforme de job matching sous Laravel",
+    exp2_bullet2: "Algorithme de matching entre offres d’emploi et profils candidats",
+    exp2_bullet3: "Espace recruteur et tableau de bord analytique",
+    exp2_bullet4: "Notifications en temps réel",
+    exp5_period: "05/2019 — 10/2019",
+    exp5_bullet1: "Gestion et animation du site web de la chaîne IPTV",
+    exp5_bullet2: "Intégration des lecteurs vidéo et gestion des médias",
+    exp5_bullet3: "Optimisation SEO et création de contenus",
+    exp5_bullet4: "Administration WordPress",
+    exp3_period: "11/2018 — 04/2019",
+    exp3_bullet1: "Solutions logicielles pour Golden Group Four et Come Canada",
+    exp3_bullet2: "Interfaces de gestion et modules métier en C# / .NET",
+    exp3_bullet3: "Développement de rapports et de tableaux de bord",
+    exp4_period: "10/2017 — 09/2018",
+    exp4_bullet1: "Développement et maintenance des applications web de gestion interne",
+    exp4_bullet2: "Modules métier en PHP",
+    exp4_bullet3: "Gestion des bases de données MySQL",
+    exp4_bullet4: "Développement frontend HTML / CSS / JavaScript",
+    exp6_period: "2017",
+    exp6_bullet1: "Projet de fin d’études : application mobile Android native en Java",
+    exp6_bullet2: "Conception de l’interface utilisateur",
+    exp6_bullet3: "Intégration d’APIs REST et persistance locale SQLite",
+    exp6_bullet4: "Déploiement sur le Play Store",
+    proj_role_title: "Mon rôle",
+    proj_tech_title: "Technologies",
+    proj_impact_title: "Impact",
+    p1_subtitle: "WMS / TMS / CRM",
+    p1_impact: "Suivi des livraisons en temps réel et centralisation des opérations de transport sur une seule plateforme.",
+    p1_role1: "Développement des APIs .NET Core",
+    p1_role2: "Développement des interfaces Angular et React",
+    p1_role3: "Intégration de Google Maps pour le suivi des véhicules",
+    p1_role4: "Modélisation et optimisation de la base SQL Server",
+    p1_role5: "Maintenance et évolution des modules métier",
+    p2_subtitle: "SaaS · E-learning · Live Events",
+    p2_impact: "Organisation de séminaires en direct et gestion des abonnés depuis une seule interface.",
+    p2_role1: "Développement des APIs .NET 8 en Clean Architecture et CQRS",
+    p2_role2: "Interfaces Blazor, React / Next.js et Angular",
+    p2_role3: "Authentification et gestion des accès membres",
+    p2_role4: "Système d'abonnement et espace membres",
+    p2_role5: "Diffusion et gestion des sessions live",
+    p2_role6: "Tableau de bord administrateur et suivi des inscriptions",
+    p3_subtitle: "ERP multi-sociétés",
+    p3_impact: "Remplacement d'outils séparés par un système unique couvrant les processus de l'entreprise.",
+    p3_role1: "Développement des modules commercial, comptabilité, RH et logistique",
+    p3_role2: "APIs .NET Core et interfaces Angular / TypeScript",
+    p3_role3: "Conception du modèle de données SQL Server",
+    p3_role4: "Reporting temps réel et gestion multi-sociétés",
+    p3_role5: "Intégration continue sous Azure DevOps",
+    p4_subtitle: "Planification de production industrielle",
+    p4_impact: "Visibilité sur l'avancement des ordres de fabrication et sur les stocks matières en production.",
+    p4_role1: "Planification des ordres de fabrication",
+    p4_role2: "Gestion des nomenclatures et des gammes de production",
+    p4_role3: "Suivi des stocks matières et du contrôle qualité",
+    p4_role4: "Développement .NET Core et Angular",
+    p4_role5: "Modélisation SQL Server des données de production",
+    p5_subtitle: "Plateforme de recrutement",
+    p5_impact: "Mise en relation automatique des candidats avec les offres correspondant à leur profil.",
+    p5_role1: "Conception et développement complet sous Laravel",
+    p5_role2: "Algorithme de matching entre offres et profils candidats",
+    p5_role3: "Espace recruteur et tableau de bord analytique",
+    p5_role4: "Notifications en temps réel",
+    p5_role5: "Modélisation de la base MySQL",
+    avail_label: "Disponible pour",
+    wb_label: "Ce que je construis",
+    wb_title: "Mes domaines",
+    wb_title_hl: "d'intervention",
+    wb0_title: "Applications métier",
+    wb1_title: "Développement backend",
+    wb2_title: "Développement frontend",
+    wb3_title: "Cloud & DevOps",
+    wb4_title: "Architecture logicielle",
+    proj_featured: "Projet phare",
+    role_title: "Développeuse Full Stack .NET",
+    role_stack: "C# · ASP.NET Core · Angular · React · Azure",
   },
   en: {
-    /* nav */ nav_home:'Home', nav_about:'About', nav_skills:'Skills', nav_exp:'Experience', nav_projects:'Projects', nav_edu:'Education', nav_contact:'Contact',
-    /* hero */ hero_badge:'Available for new projects', hero_greeting:"Hello 👋 I'm", hero_desc:'FullStack Developer with 4+ years of experience, specialised in .NET Core, Angular, React, Blazor and TypeScript. I design robust solutions ranging from ERPs to innovative web platforms.', hero_cta1:'View Projects', hero_cta2:'Contact Me', hero_cv:'Download CV',
-    /* roles */ role0:'FullStack Developer', role1:'.NET & Angular Expert', role2:'Software Architect', role3:'UI/UX Enthusiast',
-    /* stats */ stat_years:'Years of Experience', stat_projects:'Projects Shipped', stat_companies:'Companies', stat_tech:'Technologies Mastered',
-    /* about */ about_label:'Get to know me', about_title:'About', about_title_hl:'Me', about_sub:'FullStack Developer passionate about building performant, maintainable and user-centred digital solutions.',
-    /* card */ card_role:'FullStack Developer', card_location:'Tunisia — Remote', card_exp:'4+ years of experience', card_open:'Open to opportunities', card_cta:"Let's Talk",
-    /* bio */ bio_title:'Coding with', bio_title_hl:'passion & precision', bio_p1:"I'm Raoudha Fathallah, a FullStack Developer with over 4 years of experience designing and building web and mobile applications. My journey has taken me from complex ERP projects to modern SaaS platforms, always with a focus on quality and performance.", bio_p2:'Specialised in the Microsoft ecosystem (.NET Core, .NET 8, C#, Blazor) on the backend, and in modern frameworks (Angular, React, Next.js) on the frontend, I work across all stages of the software lifecycle: design, development, testing and deployment.', bio_p3:'Curious and self-driven, I stay constantly up to date with technology. I work in Agile/Scrum methodology and place great importance on communication and collaboration. My goal: turning complex business needs into elegant digital experiences.',
-    /* tags */ tag1:'Agile / Scrum', tag2:'Clean Architecture', tag3:'Results-driven', tag4:'Continuous Learning',
-    /* values */ val_label:'What drives me', val_title:'Professional', val_title_hl:'Values', val1_title:'Quality Code', val1_desc:'Clean, tested, documented code — committed to long-term maintainability.', val2_title:'Collaboration', val2_desc:'Agile teamwork, transparent communication and knowledge sharing.', val3_title:'Continuous Improvement', val3_desc:'Constant learning, certifications and active tech watch.',
-    /* skills */ skills_label:'My Toolkit', skills_title:'Skills &', skills_title_hl:'Technologies', cat_backend:'Backend', cat_frontend:'Frontend', cat_mobile:'Mobile', cat_db:'Databases', cat_devops:'DevOps & Cloud', cat_design:'Design & UX',
-    /* experience */ exp_label:'Work History', exp_title:'Experience', exp_title_hl:'& Projects', exp_present:'Present',
-    exp0_role:'FullStack Developer', exp0_desc:'Development of Teleseminar, an online seminar platform, and Kwabb. Built dynamic interfaces with Blazor and React/Next.js, robust APIs with .NET 8, live session management, subscription system and member portal.',
-    exp1_role:'FullStack Developer', exp1_desc:'Developed three major products: Flex Transport (WMS/TMS/CRM with Google Maps real-time delivery tracking), SMTP (complete ERP: sales, accounting, HR, logistics) and AEI GPAO (industrial production planning software).',
-    exp2_role:'FullStack Developer', exp2_desc:'Design and development of a job matching platform in Laravel: algorithmic matching between job offers and candidate profiles, recruiter portal, analytics dashboard and real-time notifications.',
-    exp3_role:'.NET Developer', exp3_desc:'Developed software solutions for Golden Group Four and Come Canada. Built management interfaces and business modules in C# / .NET, reports and dashboards.',
-    exp4_role:'Web Developer', exp4_desc:"Development and maintenance of web applications for the centre's internal management. PHP modules, MySQL database management and HTML/CSS/JavaScript frontend development.",
-    exp5_role:'Web Master', exp5_desc:'Management and content creation for the IPTV channel website: SEO optimisation, video player integration, media management and WordPress administration.',
-    exp6_role:'Mobile Developer (Final Year Project)', exp6_desc:'Final year project: native Android mobile application development in Java. UI design, REST API integration, local persistence with SQLite and Play Store deployment.',
-    /* projects */ proj_label:'My Work', proj_title:'Featured', proj_title_hl:'Projects', proj_sub:'A selection of key projects — from transport management to SaaS platforms and industrial production software.', filter_all:'All',
-    p1_desc:'Transport management application integrating WMS, TMS and CRM. Real-time delivery tracking via Google Maps, order management, delivery routes, warehouse management and advanced reporting to optimise the supply chain.',
-    p2_desc:'Online seminar and remote training platform. Live event management, video streaming, subscription system, member portal and admin dashboard.',
-    p3_desc:'Complete ERP covering sales management, accounting, HR and logistics. Interconnected modules, real-time reporting and multi-company management.',
-    p4_desc:'Computer-Aided Production Management software. Manufacturing order planning, bill of materials management, raw material stock tracking and production quality control.',
-    p5_desc:'Employer/candidate matching platform with matching algorithm. Dynamic profiles, recommendation system, integrated messaging and recruiter dashboard.',
-    /* education */ edu_label:'Academic Background', edu_title:'Education', edu_title_hl:'& Degrees',
-    /* certs & langs */ cert_label:'Certifications & Languages', cert_title:'Certifications', cert_title_hl:'& Languages', lang_label:'Language Proficiency',
-    lang0_name:'Arabic', lang0_level:'Bilingual (Native)', lang1_name:'French', lang1_level:'Fluent (C1)', lang2_name:'English', lang2_level:'Professional (B2)', lang3_name:'Italian', lang3_level:'Beginner (A1)',
-    /* contact */ contact_label:'Get In Touch', contact_title:'Contact', contact_title_hl:'Me', contact_sub:"A project, an opportunity or just want to chat? Feel free to reach out — I usually reply within 24h.", contact_info_title:'Contact Information', contact_info_desc:'Available for freelance missions, FullStack positions (permanent/contract) and innovative projects. Feel free to get in touch to discuss your needs.',
-  }
+    nav_home: "Home",
+    nav_about: "About",
+    nav_skills: "Skills",
+    nav_exp: "Experience",
+    nav_projects: "Projects",
+    nav_edu: "Education",
+    nav_contact: "Contact",
+    hero_badge: "Available for new projects",
+    hero_greeting: "Hello 👋 I'm",
+    hero_desc: "I design and build robust, scalable and maintainable web applications, from the backend to the user interface.",
+    hero_cta1: "View Projects",
+    hero_cv: "Download my CV",
+    stat_years: "Years of Experience",
+    stat_projects: "Projects Shipped",
+    stat_companies: "Companies",
+    stat_tech: "Technologies Mastered",
+    about_label: "Get to know me",
+    about_title: "About",
+    about_title_hl: "Me",
+    about_sub: "FullStack Developer passionate about building performant, maintainable and user-centred digital solutions.",
+    card_role: "FullStack Developer",
+    card_location: "Tunisia — Remote",
+    card_exp: "4+ years of experience",
+    card_open: "Open to opportunities",
+    card_cta: "Let's Talk",
+    bio_title: "Coding with",
+    bio_title_hl: "passion & precision",
+    bio_p1: "I'm Raoudha Fathallah, a FullStack Developer with over 4 years of experience designing and building web and mobile applications. My journey has taken me from complex ERP projects to modern SaaS platforms, always with a focus on quality and performance.",
+    bio_p2: "Specialised in the Microsoft ecosystem (.NET Core, .NET 8, C#, Blazor) on the backend, and in modern frameworks (Angular, React, Next.js) on the frontend, I work across all stages of the software lifecycle: design, development, testing and deployment.",
+    bio_p3: "Curious and self-driven, I stay constantly up to date with technology. I work in Agile/Scrum methodology and place great importance on communication and collaboration. My goal: turning complex business needs into elegant digital experiences.",
+    tag1: "Agile / Scrum",
+    tag2: "Clean Architecture",
+    tag3: "Results-driven",
+    tag4: "Continuous Learning",
+    val_label: "What drives me",
+    val_title: "Professional",
+    val_title_hl: "Values",
+    val1_title: "Quality Code",
+    val1_desc: "Clean, tested, documented code — committed to long-term maintainability.",
+    val2_title: "Collaboration",
+    val2_desc: "Agile teamwork, transparent communication and knowledge sharing.",
+    val3_title: "Continuous Improvement",
+    val3_desc: "Constant learning, certifications and active tech watch.",
+    skills_label: "My Toolkit",
+    skills_title: "Skills &",
+    skills_title_hl: "Technologies",
+    cat_backend: "Backend",
+    cat_frontend: "Frontend",
+    cat_db: "Database",
+    cat_devops: "Cloud & DevOps",
+    exp_label: "Work History",
+    exp_title: "Experience",
+    exp_title_hl: "& Projects",
+    exp0_role: "FullStack Developer",
+    exp1_role: "FullStack Developer",
+    exp2_role: "FullStack Developer",
+    exp3_role: ".NET Developer",
+    exp4_role: "Web Developer",
+    exp5_role: "Web Master",
+    exp6_role: "Mobile Developer (Final Year Project)",
+    proj_label: "My Work",
+    proj_title: "Featured",
+    proj_title_hl: "Projects",
+    proj_sub: "A selection of key projects — from transport management to SaaS platforms and industrial production software.",
+    filter_all: "All",
+    p1_desc: "Transport management platform driving orders, routes, vehicles, warehouses and deliveries.",
+    p2_desc: "Seminar and distance-learning platform covering live sessions, the member area and subscriptions.",
+    p3_desc: "ERP covering sales management, accounting, human resources and logistics.",
+    p4_desc: "Computer-aided production management software for shop-floor planning and tracking.",
+    p5_desc: "Platform connecting employers and candidates, built around a matching engine.",
+    edu_label: "Academic Background",
+    edu_title: "Education",
+    edu_title_hl: "& Degrees",
+    cert_label: "Certifications & Languages",
+    cert_title: "Certifications",
+    cert_title_hl: "& Languages",
+    lang_label: "Language Proficiency",
+    lang0_name: "Arabic",
+    lang0_level: "Bilingual (Native)",
+    lang1_name: "French",
+    lang1_level: "Fluent (C1)",
+    lang2_name: "English",
+    lang2_level: "Professional (B2)",
+    lang3_name: "Italian",
+    lang3_level: "Beginner (A1)",
+    contact_label: "Get In Touch",
+    contact_title: "Contact",
+    contact_title_hl: "Me",
+    contact_sub: "A project, an opportunity or just want to chat? Feel free to reach out — I usually reply within 24h.",
+    contact_info_title: "Contact Information",
+    contact_info_desc: "Available for freelance missions, FullStack positions (permanent/contract) and innovative projects. Feel free to get in touch to discuss your needs.",
+    cat_arch: "Architecture",
+    nav_arch: "Architecture",
+    arch_label: "How I structure code",
+    arch_title: "Application",
+    arch_title_hl: "architecture",
+    arch_sub: "The path a request takes through the .NET services I build, from the interface down to the database.",
+    arch_practices: "Principles applied",
+    arch_note: "Dependencies point inward: the domain knows neither the database nor the web framework.",
+    arch0_desc: "Angular, React, Next.js and Blazor interfaces",
+    arch1_desc: "HTTP contracts, authentication and error handling",
+    arch2_desc: "Controllers, middleware and dependency injection",
+    arch3_desc: "Commands, Queries, Handlers and validation",
+    arch4_desc: "Entities, business rules and invariants",
+    arch5_desc: "EF Core, repositories and external services",
+    arch6_desc: "Persistence, migrations and indexes",
+    exp0_period: "09/2024 — Present",
+    exp0_bullet1: "Built Teleseminar, an online seminar platform, and Kwabb",
+    exp0_bullet2: ".NET 8 APIs structured with Clean Architecture and CQRS",
+    exp0_bullet3: "Blazor and React / Next.js interfaces",
+    exp0_bullet4: "Live session handling and subscription system",
+    exp0_bullet5: "Member area and administrator dashboard",
+    exp1_period: "2022 — 2024",
+    exp1_bullet1: "Flex Transport: WMS / TMS / CRM with real-time tracking via Google Maps",
+    exp1_bullet2: "SMTP: full ERP — sales, accounting, HR and logistics",
+    exp1_bullet3: "AEI GPAO: industrial production planning software",
+    exp1_bullet4: ".NET Core and Angular development across all three products",
+    exp1_bullet5: "Continuous integration and deployments on Azure DevOps",
+    exp2_period: "03/2021 — 11/2021",
+    exp2_bullet1: "Designed and built a job matching platform on Laravel",
+    exp2_bullet2: "Matching algorithm between job offers and candidate profiles",
+    exp2_bullet3: "Recruiter area and analytics dashboard",
+    exp2_bullet4: "Real-time notifications",
+    exp5_period: "05/2019 — 10/2019",
+    exp5_bullet1: "Ran and maintained the IPTV channel website",
+    exp5_bullet2: "Video player integration and media management",
+    exp5_bullet3: "SEO optimisation and content creation",
+    exp5_bullet4: "WordPress administration",
+    exp3_period: "11/2018 — 04/2019",
+    exp3_bullet1: "Software solutions for Golden Group Four and Come Canada",
+    exp3_bullet2: "Management interfaces and business modules in C# / .NET",
+    exp3_bullet3: "Reports and dashboards",
+    exp4_period: "10/2017 — 09/2018",
+    exp4_bullet1: "Built and maintained the internal management web applications",
+    exp4_bullet2: "Business modules in PHP",
+    exp4_bullet3: "MySQL database management",
+    exp4_bullet4: "HTML / CSS / JavaScript frontend development",
+    exp6_period: "2017",
+    exp6_bullet1: "Final year project: native Android mobile application in Java",
+    exp6_bullet2: "User interface design",
+    exp6_bullet3: "REST API integration and local SQLite persistence",
+    exp6_bullet4: "Play Store deployment",
+    proj_role_title: "My role",
+    proj_tech_title: "Technologies",
+    proj_impact_title: "Impact",
+    p1_subtitle: "WMS / TMS / CRM",
+    p1_impact: "Real-time delivery tracking and transport operations centralised on a single platform.",
+    p1_role1: ".NET Core API development",
+    p1_role2: "Angular and React interface development",
+    p1_role3: "Google Maps integration for vehicle tracking",
+    p1_role4: "SQL Server data modelling and optimisation",
+    p1_role5: "Maintenance and evolution of the business modules",
+    p2_subtitle: "SaaS · E-learning · Live Events",
+    p2_impact: "Live seminars run and subscribers managed from a single interface.",
+    p2_role1: ".NET 8 API development with Clean Architecture and CQRS",
+    p2_role2: "Blazor, React / Next.js and Angular interfaces",
+    p2_role3: "Authentication and member access management",
+    p2_role4: "Subscription system and member area",
+    p2_role5: "Live session streaming and management",
+    p2_role6: "Administrator dashboard and registration tracking",
+    p3_subtitle: "Multi-company ERP",
+    p3_impact: "Separate tools replaced by one system covering the company processes.",
+    p3_role1: "Sales, accounting, HR and logistics modules",
+    p3_role2: ".NET Core APIs and Angular / TypeScript interfaces",
+    p3_role3: "SQL Server data model design",
+    p3_role4: "Real-time reporting and multi-company support",
+    p3_role5: "Continuous integration on Azure DevOps",
+    p4_subtitle: "Industrial production planning",
+    p4_impact: "Visibility over manufacturing order progress and raw material stock during production.",
+    p4_role1: "Manufacturing order planning",
+    p4_role2: "Bills of materials and production routings",
+    p4_role3: "Raw material stock and quality control tracking",
+    p4_role4: ".NET Core and Angular development",
+    p4_role5: "SQL Server modelling of production data",
+    p5_subtitle: "Recruitment platform",
+    p5_impact: "Candidates matched automatically with the offers that fit their profile.",
+    p5_role1: "Full design and development on Laravel",
+    p5_role2: "Matching algorithm between job offers and candidate profiles",
+    p5_role3: "Recruiter area and analytics dashboard",
+    p5_role4: "Real-time notifications",
+    p5_role5: "MySQL database modelling",
+    avail_label: "Available for",
+    wb_label: "What I build",
+    wb_title: "My areas of",
+    wb_title_hl: "expertise",
+    wb0_title: "Enterprise Applications",
+    wb1_title: "Backend Development",
+    wb2_title: "Frontend Development",
+    wb3_title: "Cloud & DevOps",
+    wb4_title: "Software Architecture",
+    proj_featured: "Featured project",
+    role_title: "Full Stack .NET Developer",
+    role_stack: "C# · ASP.NET Core · Angular · React · Azure",
+  },
 };
 
 function applyLang(lang) {

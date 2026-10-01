@@ -1,9 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { skillsList, experienceList } from "@/lib/data";
+import { skillsList, experienceList, architectureLayers } from "@/lib/data";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SkillBadge from "@/components/ui/SkillBadge";
+import ArchitectureDiagram from "@/components/ui/ArchitectureDiagram";
 import Button from "@/components/ui/Button";
 import { ArrowRight, MapPin, Calendar, Briefcase, GraduationCap, Award, Languages } from "lucide-react";
 import type { SkillCategory } from "@/lib/data";
@@ -25,12 +26,11 @@ export default function AboutPage() {
 
   /* ── Skills categories ── */
   const skillCategories: { key: SkillCategory; label: string; icon: string }[] = [
-    { key: "frontend", label: t("cat_frontend"), icon: "🎨" },
     { key: "backend", label: t("cat_backend"), icon: "⚙️" },
-    { key: "mobile", label: t("cat_mobile"), icon: "📱" },
+    { key: "frontend", label: t("cat_frontend"), icon: "🎨" },
     { key: "database", label: t("cat_database"), icon: "🗄️" },
     { key: "devops", label: t("cat_devops"), icon: "☁️" },
-    { key: "design", label: t("cat_design"), icon: "✏️" },
+    { key: "architecture", label: t("cat_architecture"), icon: "🏛️" },
   ];
 
   /* ── Experiences (7 entries) ── */
@@ -38,7 +38,7 @@ export default function AboutPage() {
     role: t(`exp${e.index}_role`),
     company: t(`exp${e.index}_company`),
     period: t(`exp${e.index}_period`),
-    desc: t(`exp${e.index}_desc`),
+    bullets: Array.from({ length: e.bullets }, (_, n) => t(`exp${e.index}_bullet${n + 1}`)),
     tech: e.tech,
   }));
 
@@ -84,9 +84,9 @@ export default function AboutPage() {
             {/* Card */}
             <SectionWrapper direction="left" className="lg:col-span-2">
               <div className="relative">
-                <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-blue-500/20 via-green-500/10 to-cyan-500/10 blur-2xl" />
+                <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-blue-500/20 via-violet-500/10 to-cyan-500/10 blur-2xl" />
                 <div className="relative glass rounded-3xl border border-white/10 p-8 space-y-6">
-                  <div className="w-24 h-24 mx-auto rounded-2xl bg-gradient-to-br from-blue-500 to-green-500 flex items-center justify-center text-3xl font-black text-white shadow-lg shadow-blue-500/30">
+                  <div className="w-24 h-24 mx-auto rounded-2xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-3xl font-black text-white shadow-lg shadow-blue-500/30">
                     RF
                   </div>
                   <div className="text-center space-y-1">
@@ -143,7 +143,7 @@ export default function AboutPage() {
 
       {/* ── Skills ── */}
       <section className="py-20 border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-6 space-y-14">
+        <div className="max-w-6xl mx-auto px-6 space-y-10">
           <SectionHeader label={t("skills_label")} title={t("skills_title")} highlight={t("skills_highlight")} />
           {skillCategories.map((cat) => {
             const catSkills = skillsList.filter((s) => s.category === cat.key);
@@ -156,7 +156,7 @@ export default function AboutPage() {
                     <span className="uppercase tracking-widest">{cat.label}</span>
                   </h3>
                 </SectionWrapper>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div className="flex flex-wrap gap-2.5">
                   {catSkills.map((skill, i) => <SkillBadge key={skill.name} skill={skill} index={i} />)}
                 </div>
               </div>
@@ -165,33 +165,70 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ── Architecture ── */}
+      <section className="py-20 border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-6 space-y-12">
+          <SectionHeader label={t("arch_label")} title={t("arch_title")} highlight={t("arch_highlight")} />
+          <SectionWrapper className="text-center">
+            <p className="text-zinc-400 max-w-2xl mx-auto leading-relaxed">{t("arch_sub")}</p>
+          </SectionWrapper>
+          <ArchitectureDiagram
+            descriptions={architectureLayers.map((_, i) => t(`arch${i}_desc`))}
+            practicesLabel={t("arch_practices")}
+            note={t("arch_note")}
+          />
+        </div>
+      </section>
+
       {/* ── Experience timeline ── */}
       <section className="py-20 border-t border-white/5">
         <div className="max-w-6xl mx-auto px-6 space-y-14">
           <SectionHeader label={t("exp_label")} title={t("exp_title")} highlight={t("exp_highlight")} />
-          <div className="relative">
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-indigo-500/50 via-green-500/30 to-transparent" />
-            <div className="space-y-10">
+          <div className="relative pl-10">
+            {/* One rail on the left: the eye follows a single column and every
+                card keeps the full width for its bullets. */}
+            <div className="absolute left-[5px] top-2 bottom-2 w-0.5 rounded-full bg-gradient-to-b from-indigo-500 via-violet-500/50 to-transparent" />
+            <div className="space-y-5">
               {exps.map((exp, i) => (
-                <SectionWrapper key={i} delay={i * 0.1}>
-                  <div className={`relative flex flex-col md:flex-row gap-8 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
-                    <div className="absolute left-4 md:left-1/2 w-3 h-3 -translate-x-1.5 mt-6 rounded-full bg-indigo-500 ring-4 ring-indigo-500/20 z-10" />
-                    <div className={`hidden md:flex md:w-1/2 items-start ${i % 2 === 0 ? "justify-end pr-12" : "justify-start pl-12"} pt-4`}>
-                      <span className="text-sm font-mono text-indigo-400">{exp.period}</span>
-                    </div>
-                    <div className={`ml-10 md:ml-0 md:w-1/2 ${i % 2 === 0 ? "md:pl-12" : "md:pr-12"}`}>
-                      <motion.div whileHover={{ x: i % 2 === 0 ? 4 : -4 }} transition={{ type: "spring" as const, stiffness: 300, damping: 20 }} className="glass rounded-2xl p-6 border border-white/8 hover:border-indigo-500/30 transition-colors duration-300">
-                        <span className="md:hidden text-xs font-mono text-indigo-400 block mb-2">{exp.period}</span>
-                        <h3 className="text-base font-bold text-white">{exp.role}</h3>
-                        <p className="text-indigo-400 text-sm font-semibold mb-3">{exp.company}</p>
-                        <p className="text-zinc-400 text-sm leading-relaxed mb-4">{exp.desc}</p>
-                        <div className="flex flex-wrap gap-2">
-                          {exp.tech.map((tech) => (
-                            <span key={tech} className="px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-500/10 border border-indigo-500/20 text-indigo-300">{tech}</span>
-                          ))}
+                <SectionWrapper key={i} delay={i * 0.08}>
+                  <div className="relative">
+                    <span
+                      className={`absolute -left-10 top-7 w-3 h-3 rounded-full ring-4 ring-dark ${
+                        i === 0 ? "bg-emerald-400 animate-pulse" : "bg-indigo-500"
+                      }`}
+                      aria-hidden="true"
+                    />
+                    <motion.div
+                      whileHover={{ x: 3 }}
+                      transition={{ type: "spring" as const, stiffness: 300, damping: 20 }}
+                      className="glass rounded-2xl p-6 border border-white/8 hover:border-indigo-500/30 transition-colors duration-300"
+                    >
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center text-base font-black text-white">
+                          {exp.company.trim().charAt(0).toUpperCase()}
                         </div>
-                      </motion.div>
-                    </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-base font-bold text-white">{exp.role}</h3>
+                          <p className="text-indigo-400 text-sm font-semibold">{exp.company}</p>
+                        </div>
+                        <span className="shrink-0 px-2.5 py-1 rounded-full border border-white/8 bg-white/3 text-[11px] font-mono text-zinc-400 whitespace-nowrap">
+                          {exp.period}
+                        </span>
+                      </div>
+                      <ul className="space-y-1.5 mb-4">
+                        {exp.bullets.map((bullet) => (
+                          <li key={bullet} className="flex items-start gap-2.5 text-zinc-400 text-sm leading-relaxed">
+                            <span className="w-1 h-1 rounded-full bg-indigo-400 shrink-0 mt-2" />
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="flex flex-wrap gap-2">
+                        {exp.tech.map((tech) => (
+                          <span key={tech} className="px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-500/10 border border-indigo-500/20 text-indigo-300">{tech}</span>
+                        ))}
+                      </div>
+                    </motion.div>
                   </div>
                 </SectionWrapper>
               ))}
@@ -208,7 +245,7 @@ export default function AboutPage() {
             {education.map((edu, i) => (
               <SectionWrapper key={i} delay={i * 0.12}>
                 <motion.div whileHover={{ y: -4 }} transition={{ type: "spring" as const, stiffness: 300, damping: 20 }} className="glass rounded-2xl p-6 border border-white/8 hover:border-indigo-500/30 transition-colors duration-300 h-full space-y-4">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-green-500/10 border border-white/10 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-violet-500/10 border border-white/10 flex items-center justify-center">
                     <GraduationCap size={18} className="text-indigo-400" />
                   </div>
                   <div>
@@ -245,7 +282,7 @@ export default function AboutPage() {
                     transition={{ delay: i * 0.1 }}
                     className="flex items-center gap-3 glass rounded-xl px-4 py-3 border border-white/8 hover:border-indigo-500/30 transition-colors duration-300"
                   >
-                    <span className="w-2 h-2 rounded-full bg-gradient-to-br from-blue-400 to-green-400 shrink-0" />
+                    <span className="w-2 h-2 rounded-full bg-gradient-to-br from-blue-400 to-violet-400 shrink-0" />
                     <span className="text-sm text-zinc-300 font-medium">{cert}</span>
                   </motion.div>
                 ))}
@@ -287,7 +324,7 @@ export default function AboutPage() {
         <div className="max-w-6xl mx-auto px-6">
           <SectionWrapper>
             <div className="glass rounded-3xl border border-white/10 p-10 md:p-16 text-center space-y-6 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-green-500/5 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-violet-500/5 to-transparent" />
               <div className="relative z-10 space-y-4">
                 <h2 className="text-4xl font-black text-white">
                   {t("cta_title")} <span className="gradient-text">{t("cta_highlight")}</span>

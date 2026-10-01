@@ -89,14 +89,19 @@ export default function ProjectsPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6"
             >
               {filtered.map((project, i) => (
                 <ProjectCard
                   key={project.id}
                   project={project}
                   title={t(`${project.id}_title`)}
+                  subtitle={t(`${project.id}_subtitle`)}
                   description={t(`${project.id}_desc`)}
+                  roles={Array.from({ length: project.roles }, (_, n) => t(`${project.id}_role${n + 1}`))}
+                  impact={t(`${project.id}_impact`)}
+                  labels={{ roles: t("role_title"), tech: t("tech_title"), impact: t("impact_title"), featured: t("featured_title") }}
+                  featured={i === 0}
                   index={i}
                 />
               ))}
